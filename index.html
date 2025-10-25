@@ -1,863 +1,2024 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPN WORD NET OFICIAL</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f4f4f4; /* cor ddo fundo do site */
-            color: #333;
-            transition: background-color 0.5s, color 0.5s;
-        }
-
-        body.dark-mode {
-            background-color: #333;
-            color: #f4f4f4;
-        }
-
-        header {
-            width: 100%;
-            background-color: #0087ff; /* cor da faixa de cima onde */
-            color: white;
-            padding: 1em 0;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        header h1 {
-            position: relative;
-            animation-duration: 1s;
-            animation-fill-mode: forwards;
-        }
-
-        @keyframes slideTitleIn {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideTitleOut {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-
-        main {
-            flex: 1;
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .topic {
-            background-color: white;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 135, 255,0.9); /* cor das bordas das janelas */
-        }
-
-        .dark-mode .topic {
-            background-color: #444;
-            box-shadow: 0 0 10px rgba(255,255,255,0.1);
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            margin-bottom: 20px;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .download-icon {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #4CAF50;
-            font-size: 1.2em;
-            margin-top: 20px;
-            transition: color 0.3s ease-in-out;
-        }
-
-        .download-icon:hover {
-            color: #FF5733;
-        }
-
-        .download-icon i {
-            margin-right: 8px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .download-icon:hover i {
-            transform: scale(1.2);
-        }
-
-        footer {
-            width: 100%;
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 1em;
-            margin-top: 20px;
-        }
-
-        .icon-telegram1, .icon-telegram2, .icon-whatsapp, .icon-android, .icon-apple, .icon-store {
-            position: fixed;
-            width: 32px;
-            height: 32px;
-            left: 10px;
-            transition: transform 0.3s, fill 0.3s;
-        }
-
-        .icon-store {
-            bottom: 300px;
-            fill: #ffd100; /* cor do icone da loja */
-            animation: rotatePulse 3s infinite;
-        }
-
-        .icon-apple {
-            bottom: 250px;
-            fill: #000000; /* cor do icone apple */
-        }
-
-        .icon-android {
-            bottom: 200px;
-            fill: #40b131; /* cor do icone android */
-        }
-
-        .icon-telegram1 {
-            bottom: 150px;
-            fill: #0088cc; /* cor do icone telegram 1 */
-        }
-
-        .icon-telegram2 {
-            bottom: 100px;
-            fill: #0088cc; /* cor do icone telegram 2 */
-        }
-
-        .icon-whatsapp {
-            fill: #25D366; /* cor do icone whatsapp */
-            bottom: 50px;
-        }
-
-        .icon-telegram1:hover, .icon-telegram2:hover, .icon-whatsapp:hover, .icon-android:hover, .icon-apple:hover, .icon-store:hover {
-            transform: scale(1.2);
-        }
-
-        .icon-apple:hover, .icon-android:hover {
-            transform: rotate(20deg);
-            fill: #FF5733;
-        }
-
-        .icon-telegram1:hover, .icon-telegram2:hover {
-            fill: #005f8c;
-        }
-
-        .icon-whatsapp:hover {
-            fill: #128C7E;
-        }
-
-        /* Efeito de rotação e pulsação contínua */
-        @keyframes rotatePulse {
-            0% {
-                transform: rotate(0deg) scale(1);
-            }
-            50% {
-                transform: rotate(180deg) scale(1.1);
-            }
-            100% {
-                transform: rotate(360deg) scale(1);
-            }
-        }
-
-        /* Estilos para o alerta */
-        .custom-alert {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            max-width: 400px;
-            max-height: 70%;
-            overflow-y: auto;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            z-index: 1000;
-            border-radius: 8px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            line-height: 1.4;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            animation: pulse 2s infinite;
-        }
-
-        /* Animação de pulso */
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 0, 0, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 0, 0, 0.8);
-            }
-        }
-
-        /* Estilos para o botão de fechar */
-        .close-btn {
-            position: absolute;
-            top: 3px;
-            right: 0px;
-            cursor: pointer;
-            font-size: 20px;
-            color: #fff;
-            background-color: #ff0000; /* cor do botao fechar alerta */
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
-        }
-
-        .close-btn:hover {
-            background-color: #51d32f; /* cor do botao fechar alerta ao passar o mause por cima*/
-        }
-
-        /* Estilos para os parágrafos dentro do alerta */
-        .custom-alert p {
-            margin: 0 0 10px;
-        }
-
-        .toggle-dark-mode {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: #4CAF50;
-            transition: color 0.3s;
-        }
-
-        .toggle-dark-mode:hover {
-            color: #FF5733;
-        }
-
-.dark-mode .custom-alert {
-    background-color: #444;
-    border: 1px solid #666;
-    color: #f4f4f4; /* cor da letras do alerta */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPN WORD NET</title>
+<style>
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.moon-icon {
-    fill: #000000; /* Cor padrão do ícone */
-    transition: fill 3.s; /* Transição suave para a cor */
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* impede qualquer barra lateral indesejada */
 }
 
-.moon-icon:hover {
-    fill: #ffaf00; /* Cor ao passar o mouse no icone da lua */
+body {
+  background: #0d0d0d;
+  color: #fff;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%; /* evita zoom automático em mobile */
 }
 
-/* Caso você queira alterar a cor no modo escuro */
-body.dark-mode .moon-icon {
-    fill: #ffffff; /* Cor do ícone no modo escuro */
+a {
+  text-decoration: none;
+  color: inherit;
 }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.3s;
+}
+
+header.scrolled {
+  background: rgba(30, 30, 30, 0.95);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+header .logo {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #1e90ff;
+  letter-spacing: 1px;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+header nav ul li a {
+  color: #fff;
+  transition: 0.3s;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active {
+  color: #1e90ff;
+  font-weight: bold;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  height: 3px;
+  width: 28px;
+  background: #fff;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+/* Hero */
+.hero {
+  background: url('https://i.ibb.co/B5FJ09FT/what-is-a-vpn.jpg') no-repeat center center/cover;
+  min-height:95vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  padding:0 20px;
+}
+.hero::after {
+  content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.65); z-index:0;
+}
+.hero-content {position:relative; z-index:1; animation:fadeIn 1.5s ease-in-out;}
+.hero h1 {font-size:3rem; margin-bottom:15px; color:#00bfff; text-shadow:0 0 15px rgba(0,191,255,0.6);}
+.hero p {font-size:1.3rem; margin-bottom:30px; max-width:700px;}
+.hero-buttons {display:flex; gap:15px; flex-wrap:wrap; justify-content:center;}
+.hero-buttons a {
+  padding:14px 28px; border-radius:8px; font-weight:bold;
+  transition:0.3s; box-shadow:0 5px 15px rgba(0,191,255,0.4);
+}
+.hero-buttons a.ver-planos {background:linear-gradient(135deg,#1e90ff,#00bfff); color:#fff;}
+.hero-buttons a.ver-planos:hover {transform:translateY(-3px) scale(1.05); box-shadow:0 8px 20px rgba(0,191,255,0.6);}
+.hero-buttons a.whatsapp {background:#25D366; color:#fff;}
+.hero-buttons a.whatsapp:hover {transform:translateY(-3px) scale(1.05); box-shadow:0 8px 20px rgba(37,211,102,0.5);}
+
+/* Sections */
+section {padding:100px 20px;}
+h2 {text-align:center; font-size:2.5rem; margin-bottom:50px; color:#00bfff; text-shadow:0 0 10px rgba(0,191,255,0.4);}
+
+/* ---------- PLANS GRID MODERNO ---------- */
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  margin: 30px 0;
+  align-items: stretch;
+}
+
+.plan {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding: 28px 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 12px 40px rgba(0,170,255,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.plan::before {
+  content:"";
+  position:absolute;
+  top:-60%; left:-60%;
+  width:220%; height:220%;
+  background: linear-gradient(60deg, #00d2ff, #0066ff, #ff6ec7, #ffb347);
+  opacity:0.06;
+  transform: rotate(0deg);
+  transition: opacity 0.35s;
+}
+
+.plan:hover::before {
+  opacity:0.30;
+  animation: rotateBG 8s linear infinite;
+}
+
+@keyframes rotateBG {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+/* ---------- TAGS COLORIDAS (Faixa atrás do nome) ---------- */
+.plan .tag {
+  display: inline-block;
+  padding: 8px 400px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+}
+
+.plan.plan-popular .tag { background: rgba(255,0,0,0.15); color: #ff4d4d; }
+.plan.plan-premium .tag { background: rgba(255,207,59,0.15); color: #ffcf3b; }
+.plan.plan-familia .tag { background: rgba(0,150,255,0.15); color: #4db8ff; }
+.plan.plan-empreendedor .tag { background: rgba(0,200,0,0.15); color: #4dff4d; }
+
+/* Ajuste para mobile: faixa full-width, mantendo posição dentro do card */
+@media(max-width:768px){
+  .plan .tag {
+    display: block;           /* Faz a faixa se comportar como bloco */
+    width: calc(100% + 30px); /* Largura maior que o card para alcançar bordas */
+    margin-left: -15px;       /* Ajuste negativo para alinhar às bordas da tela */
+    padding: 12px 0;          /* Altura da faixa */
+    font-size: 0.9rem;
+    border-radius: 0;         /* Bordas retas */
+    text-align: center;
+  }
+}
+
+/* ---------- PREÇOS COLORIDOS ---------- */
+.plan.plan-popular .price { color: #ff4d4d; }
+.plan.plan-premium .price { color: #ffcf3b; }
+.plan.plan-familia .price { color: #4db8ff; }
+.plan.plan-empreendedor .price { color: #4dff4d; }
+
+.plan h3 {
+  font-size: 1.45rem;
+  margin-top: 8px;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,191,255,0.5);
+}
+
+.features {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+  line-height: 1.7;
+  color: #cfeeff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.features li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.features li::before {
+  content:"\2713";
+  position:absolute;
+  left:0;
+  top:0;
+  color:#00d2ff;
+  font-size: 0.95rem;
+}
+
+.plan .buy {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------- BOTÕES COLORIDOS E ARREDONDADOS POR PLANO ---------- */
+.plan-popular .buy a,
+.plan-premium .buy a,
+.plan-familia .buy a,
+.plan-empreendedor .buy a {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  color: #fff;
+  position: relative;
+  z-index: 20;
+
+  outline: none;      /* REMOVE o contorno padrão do navegador */
+  -webkit-tap-highlight-color: transparent; /* REMOVE o destaque de toque em celulares */
+}
+
+
+
+/* Popular */
+.plan-popular .buy a {
+  background: linear-gradient(135deg, #ff4d4d, #ff0000);
+  box-shadow: 0 6px 25px rgba(255,77,77,0.5);
+}
+.plan-popular .buy a:hover {
+  background: linear-gradient(135deg, #ff0000, #ff4d4d);
+  box-shadow: 0 12px 35px rgba(255,77,77,0.7);
+  transform: scale(1.05) translateY(-3px);
+}
+
+/* Premium */
+.plan-premium .buy a {
+  background: linear-gradient(135deg, #ffcf3b, #ffb347);
+  box-shadow: 0 6px 25px rgba(255,207,59,0.5);
+}
+.plan-premium .buy a:hover {
+  background: linear-gradient(135deg, #ffb347, #ffcf3b);
+  box-shadow: 0 12px 35px rgba(255,207,59,0.7);
+  transform: scale(1.05) translateY(-3px);
+}
+
+/* Família */
+.plan-familia .buy a {
+  background: linear-gradient(135deg, #4db8ff, #0099ff);
+  box-shadow: 0 6px 25px rgba(77,184,255,0.5);
+}
+.plan-familia .buy a:hover {
+  background: linear-gradient(135deg, #0099ff, #4db8ff);
+  box-shadow: 0 12px 35px rgba(77,184,255,0.7);
+  transform: scale(1.05) translateY(-3px);
+}
+
+/* Empreendedor */
+.plan-empreendedor .buy a {
+  background: linear-gradient(135deg, #4dff4d, #00c200);
+  box-shadow: 0 6px 25px rgba(77,255,77,0.5);
+}
+.plan-empreendedor .buy a:hover {
+  background: linear-gradient(135deg, #00c200, #4dff4d);
+  box-shadow: 0 12px 35px rgba(77,255,77,0.7);
+  transform: scale(1.05) translateY(-3px);
+}
+
+/* ---------- Responsividade ---------- */
+@media(max-width:1024px){ .plans {grid-template-columns: repeat(2,1fr);} }
+@media(max-width:768px){ .plans {grid-template-columns: 1fr;} }
+
+/* ---------- FAIXAS PNG (RIBBONS) - PC ---------- */
+.plan.plan-popular::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 160px;   /* tamanho reduzido para PC */
+  height: 160px;  /* tamanho reduzido para PC */
+  background: url('https://s14.gifyu.com/images/bwa9D.png') no-repeat center/contain;
+  z-index: 10;
+  pointer-events: none;
+  animation: float 2s ease-in-out infinite alternate;
+}
+
+.plan.plan-premium::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 160px;
+  height: 160px;
+  background: url('https://s14.gifyu.com/images/bwaHx.png') no-repeat center/contain;
+  z-index: 10;
+  pointer-events: none;
+  animation: float 2s ease-in-out infinite alternate;
+}
+
+.plan.plan-familia::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 160px;
+  height: 160px;
+  background: url('https://s14.gifyu.com/images/bwrzU.png') no-repeat center/contain;
+  z-index: 10;
+  pointer-events: none;
+  animation: float 2s ease-in-out infinite alternate;
+}
+
+.plan.plan-empreendedor::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 160px;
+  height: 160px;
+  background: url('https://s14.gifyu.com/images/bwaKl.png') no-repeat center/contain;
+  z-index: 10;
+  pointer-events: none;
+  animation: float 2s ease-in-out infinite alternate;
+}
+
+/* ---------- FAIXAS PNG (RIBBONS) - Mobile ---------- */
+@media(max-width:768px){
+  .plan.plan-popular::after,
+  .plan.plan-premium::after,
+  .plan.plan-familia::after,
+  .plan.plan-empreendedor::after {
+    width: 100px;   /* tamanho menor para celular */
+    height: 100px;  /* tamanho menor para celular */
+    top: 5px;
+    right: 0;
+  }
+}
+
+/* ---------- Animação leve ---------- */
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(3deg); }
+  100% { transform: translateY(0) rotate(-3deg); }
+}
+
+/* ==============================
+   GRID DE APPS
+============================= */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* sempre 3 colunas no PC */
+  gap: 25px;
+  justify-items: center;
+}
+
+/* CARDS */
+.app-card {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 20px;
+  padding: 25px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.app-card img {
+  width: 80px;
+  margin: 0 auto 15px;
+}
+
+.app-card h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.app-card p {
+  font-size: 0.9em;
+  margin-bottom: 20px;
+  min-height: 60px;
+}
+
+/* BOTÃO BAIXAR */
+.btn-download {
+  display: inline-block;
+  padding: 10px 25px;
+  background: #fff;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.btn-download:hover {
+  opacity: 0.85;
+}
+
+/* RESPONSIVO PARA CELULAR */
+@media (max-width: 768px) {
+  .app-grid {
+    grid-template-columns: 1fr; /* 1 card por linha no celular */
+  }
+
+  .app-card {
+    max-width: 90%;
+  }
+
+  .app-card img {
+    width: 100px;
+  }
+
+  .app-card p {
+    font-size: 1em;
+    min-height: auto;
+  }
+}
+
+
+
+/* ==============================
+   GALERIA - Azul Elétrico + Ciano Neon
+============================== */
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-item {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 2s ease-out;
+}
+
+.gallery-item.reverse {
+  flex-direction: row-reverse;
+}
+
+.gallery-item img {
+  width: 50%;
+  border-radius: 18px;
+  box-shadow: 0 0 25px rgba(0, 191, 255, 0.4);
+  border: 2px solid rgba(0, 247, 255, 0.3);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.gallery-item img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 35px rgba(0, 255, 255, 0.6);
+}
+
+/* Texto da galeria */
+.gallery-text {
+  width: 50%;
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 2s ease-out;
+}
+
+.gallery-item.reverse .gallery-text {
+  transform: translateX(50px);
+}
+
+.gallery-text h3 {
+  font-size: 2rem;
+  color: #00e5ff; /* Ciano Neon */
+  text-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 25px rgba(0, 119, 255, 0.5);
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.gallery-text p {
+  font-size: 1.05rem;
+  color: #b7ecff;
+  line-height: 1.7;
+  text-shadow: 0 0 12px rgba(0, 191, 255, 0.3);
+}
+
+/* Animação quando aparece */
+.gallery-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-item.visible .gallery-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Responsividade */
+@media(max-width:768px){
+  .gallery-item,
+  .gallery-item.reverse {
+    flex-direction: column;
+  }
+  .gallery-item img,
+  .gallery-text {
+    width: 100%;
+  }
+}
+
+
+
+
+/* =================== FAQ PREMIUM =================== */
+#faq {
+  background: linear-gradient(135deg, #0d0d0d, #111111);
+  padding: 100px 20px;
+}
+
+#faq h2 {
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 60px;
+  color: #00bfff;
+  text-shadow: 0 0 12px rgba(0,191,255,0.4);
+  font-weight: 800;
+}
+
+/* Container FAQ */
+.faq-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Cada item do FAQ */
+.faq-item {
+  background: rgba(255,255,255,0.02);
+  border: 2px solid rgba(0,191,255,0.5); /* cor e transparência da borda */
+  border-radius: 15px;
+  padding: 20px 25px;
+  box-shadow: 0 8px 25px rgba(0,191,255,0.1);
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer;
+}
+
+/* Quando o FAQ estiver aberto */
+.faq-item.active {
+  border-color: #00ffff; /* cor da borda ao abrir o FAQ */
+  box-shadow: 0 12px 30px rgba(0,191,255,0.3); /* sombra mais intensa */
+}
+
+
+/* Título do FAQ */
+.faq-item h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 25px;
+  transition: color 0.4s;
+}
+
+.faq-item:hover h3 {
+  color: #00bfff;
+}
+
+/* Seta animada */
+.faq-item h3::after {
+  content: '➤';
+  font-size: 1.2rem;
+  color: #1e90ff;
+  transition: transform 0.5s ease, color 0.4s;
+}
+
+.faq-item.active h3::after {
+  transform: rotate(90deg);
+  color: #00bfff;
+}
+
+/* Resposta */
+.faq-item p {
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0;
+  color: #cfeeff;
+  font-size: 1rem;
+  line-height: 1.7;
+  transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+  opacity: 0;
+}
+
+.faq-item.active p {
+  max-height: 500px; /* ajuste conforme necessário */
+  margin-top: 15px;
+  opacity: 1;
+}
+
+/* Responsividade */
+@media(max-width:768px){
+  #faq h2 { font-size:2.2rem; margin-bottom:40px; }
+  .faq-item h3 { font-size:1.2rem; }
+  .faq-item p { font-size:0.95rem; }
+}
+
+
+/* DEPOIMENTO PREMIUM */
+
+.testimonials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.testimonial-card {
+    position: relative;
+    background: linear-gradient(145deg, #0b0b0b, #1f1f1f);
+    padding: 30px 25px 50px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,191,255,0.2);
+    width: 280px;
+    text-align: center;
+    overflow: hidden;
+    cursor: default; /* remove clique no card inteiro */
+    transform: translateY(50px);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.6s;
+}
+
+/* Remove efeito de seleção em imagens e cards */
+.testimonial-card, 
+.testimonial-card img {
+    -webkit-tap-highlight-color: transparent; /* Chrome, Safari, Edge, Opera */
+    -webkit-user-select: none; /* Evita seleção do conteúdo no toque */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.testimonial-card.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.testimonial-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid rgba(0,191,255,0.5);
+    transition: transform 0.6s, box-shadow 0.6s, border-color 0.6s;
+    pointer-events: auto; /* garante que clique seja registrado só na imagem */
+}
+
+.testimonial-card img:hover {
+    transform: scale(1.2) rotate(-5deg);
+    box-shadow: 0 20px 50px rgba(0,191,255,0.6);
+    border-color: #00ffff;
+}
+
+.testimonial-card h4 {
+    color: #00ffff;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin: 10px 0;
+    transition: color 0.3s;
+}
+
+.testimonial-card img:hover + h4 {
+    color: #ff00ff;
+}
+
+.testimonial-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+    min-height: 60px;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(0,191,255,0.3);
+}
+
+/* Fade in progressivo */
+.testimonial-card:nth-child(1).visible { transition-delay: 0s; }
+.testimonial-card:nth-child(2).visible { transition-delay: 0.15s; }
+.testimonial-card:nth-child(3).visible { transition-delay: 0.3s; }
+.testimonial-card:nth-child(4).visible { transition-delay: 0.45s; }
+.testimonial-card:nth-child(5).visible { transition-delay: 0.6s; }
+  
+/* Tutoriais */
+#tutoriais {padding:100px 20px; background:#0a0a0a;}
+#tutoriais h2 {text-align:center; font-size:2.5rem; margin-bottom:50px; color:#00bfff; text-shadow:0 0 10px rgba(0,191,255,0.4);}
+.tutorial-videos {display:grid; gap:25px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width:1200px; margin:0 auto;}
+.video-card {background:#111; border-radius:15px; padding:15px; box-shadow:0 8px 20px rgba(0,0,0,0.5); transition:0.3s;}
+.video-card:hover {transform: translateY(-5px) scale(1.02);}
+.video-card iframe {width:100%; aspect-ratio:16/9; border-radius:10px;}
+.video-card p {margin-top:10px; font-size:1rem; color:#ccc; text-align:center;}
+
+/* Responsividade Tutoriais */
+@media(max-width:1024px){.tutorial-videos {grid-template-columns: repeat(2, 1fr);}}
+@media(max-width:768px){.tutorial-videos {grid-template-columns: 1fr;}}
+
+/* Suporte */
+#suporte a {display:inline-block; margin:5px 15px; padding:12px 25px; background:#1e90ff; border-radius:10px; font-weight:bold; transition:0.3s;}
+#suporte a:hover {background:#00bfff; transform:scale(1.05);}
+
+/* Footer */
+footer {text-align:center; padding:30px 20px; background:#000; color:#aaa; font-size:0.95rem;}
+footer a {color:#1e90ff;}
+
+/* Responsividade Geral */
+@media(max-width:1024px){.hero h1 {font-size:2.5rem;} .hero p {font-size:1.2rem;}}
+
+/* Ícones sociais MOBILE + menu com rolagem */
+@media(max-width:768px){
+  .menu-toggle {display:flex;}
+  header nav ul {
+    position:fixed;
+    top:0;
+    left:-250px;
+    width:250px;
+    height:100%;
+    flex-direction:column;
+    background:#111;
+    padding:60px 20px;
+    gap:20px;
+    transition:0.4s;
+    z-index:999;
+    box-shadow:5px 0 20px rgba(0,0,0,0.5);
+    overflow-y: auto; /* <-- adicionada rolagem vertical */
+  }
+  header nav ul.active {left:0;}
+  .hero h1 {font-size:2rem;} .hero p {font-size:1.1rem;} .hero {height:100vh; min-height:100vh;}
+  .social-icons {display:flex; flex-direction:column; gap:15px; margin-top:20px;}
+  .social-icons a {display:flex; align-items:center; justify-content:center; padding:12px; border-radius:8px; font-weight:bold; color:#fff; text-align:center; transition:0.3s; box-shadow:0 5px 15px rgba(0,191,255,0.4);}
+  .social-icons a img {width:20px; height:20px; margin-right:10px;}
+  .social-icons a.whatsapp { background:#25D366; }
+  .social-icons a.telegram { background:#0088cc; }
+  .social-icons a.youtube { background:#FF0000; }
+  .social-icons a.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+  .social-icons a.facebook { background:#1877F2; }
+  .social-icons a.whatsapp:hover { box-shadow:0 8px 20px rgba(37,211,102,0.6); transform:translateY(-3px) scale(1.05);}
+  .social-icons a.telegram:hover { box-shadow:0 8px 20px rgba(0,136,204,0.6); transform:translateY(-3px) scale(1.05);}
+  .social-icons a.youtube:hover { box-shadow:0 8px 20px rgba(255,0,0,0.5); transform:translateY(-3px) scale(1.05);}
+  .social-icons a.instagram:hover { box-shadow:0 8px 20px rgba(255,100,200,0.5); transform:translateY(-3px) scale(1.05);}
+  .social-icons a.facebook:hover { box-shadow:0 8px 20px rgba(24,119,242,0.5); transform:translateY(-3px) scale(1.05);}
+}
+@media(min-width:769px){.social-icons {display:none !important;}}
+@media(max-width:480px){
+  .hero {padding:0 15px;} 
+  .hero h1 {font-size:1.8rem;} 
+  .hero p {font-size:1rem;} 
+  .hero-buttons {flex-direction:column; gap:12px;} 
+  .gallery {grid-template-columns:1fr;} 
+  .testimonials {grid-template-columns:1fr;} 
+  .plan-card a {padding:12px 25px; font-size:1rem;}
+}
+
+/* Animações */
+@keyframes fadeIn {0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);}}
+
+  
+/* ===== SUPORTE PREMIUM SIMPLIFICADO ===== */
+.suporte-pro {
+  background: radial-gradient(circle at top, #101010, #050505);
+  color: #fff;
+  padding: 80px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.suporte-pro::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(transparent, rgba(255,255,255,0.05));
+  animation: pulse 8s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(1.2); opacity: 0.2; }
+}
+
+.suporte-container {
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.suporte-titulo {
+  font-size: 2.4rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00ffaa, #00aaff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.suporte-descricao {
+  color: #ccc;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+}
+
+.suporte-blocos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.suporte-bloco {
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 25px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.suporte-bloco:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(0,255,170,0.2);
+}
+
+.suporte-bloco h3 {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #00ffaa;
+}
+
+.suporte-itens {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.suporte-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 15px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.suporte-item i {
+  font-size: 1.4rem;
+  color: #00ffaa;
+  min-width: 25px;
+  margin-top: 3px;
+}
+
+.suporte-item span {
+  font-weight: 600;
+  display: block;
+}
+
+.suporte-item small {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+.suporte-item:hover {
+  background: linear-gradient(90deg, rgba(0,255,170,0.1), rgba(0,170,255,0.15));
+  transform: translateX(5px);
+}
+
+.suporte-msg {
+  background: rgba(255,255,255,0.05);
+  padding: 18px 25px;
+  border-radius: 12px;
+  margin-top: 50px;
+  font-size: 0.95rem;
+  color: #ccc;
+  display: inline-block;
+  backdrop-filter: blur(8px);
+  border-left: 4px solid #00ffaa;
+}
+
+.suporte-msg i {
+  color: #00ffaa;
+  margin-right: 8px;
+}
+  
+ /* ==============================
+   SEÇÃO DE TUTORIAIS EM ESCRITA
+============================== */
+.tutorials-section {
+  padding: 100px 20px;
+  background: linear-gradient(180deg, #0d0d0d, #111111, #0a0a0a);
+  color: #fff;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #a855f7, #d8b4fe); /* Roxo */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+  color: #aaa;
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+
+.tutorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  justify-content: center;
+}
+
+.tutorial-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 25px;
+  text-align: left;
+  transition: all 0.35s ease;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.tutorial-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(168,85,247,0.2), transparent); /* Roxo */
+  transform: skewX(-25deg);
+  transition: 0.7s;
+}
+
+.tutorial-card:hover::before {
+  left: 125%;
+}
+
+.tutorial-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(168,85,247,0.1); /* Roxo */
+  border-color: rgba(168,85,247,0.3); /* Roxo */
+}
+
+.tc-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.tc-header i {
+  font-size: 1.8rem;
+  color: #a855f7; /* Roxo */
+  transition: transform 0.3s ease;
+}
+
+.tutorial-card:hover .tc-header i {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.tc-body {
+  margin-top: 15px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.tutorial-card.open .tc-body {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.tc-body p {
+  line-height: 1.6;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+  
+ /* ==============================
+   SEÇÃO DE TERMOS
+============================== */
+.terms-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.term-item {
+  background: linear-gradient(135deg, #1f1f1f, #222);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+
+.term-item:hover {
+  transform: translateY(-5px);
+}
+
+.term-header {
+  width: 100%;
+  text-align: left;
+  padding: 20px 25px;
+  background: #1a1a1a;
+  border: none;
+  outline: none;
+  color: #ff7f00;
+  font-size: 1.2em;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.term-header:hover {
+  background: #0d0d0d;
+}
+
+.term-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+  padding: 0 25px;
+  background: #111;
+  color: #ccc;
+}
+
+.term-content p {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+/* Toggle ativo */
+.term-item.active .term-content {
+  max-height: 500px; /* ajuste conforme texto */
+  padding: 15px 25px;
+}
+
+.toggle-icon {
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.term-item.active .toggle-icon {
+  transform: rotate(45deg);
+}
+
+/* Responsivo */
+@media(max-width:768px){
+  .term-header { font-size: 1.1em; padding: 15px 20px; }
+  .term-content { padding: 0 20px; }
+  .term-content p { font-size: 0.95em; }
+}
+
+</style>
 </head>
 <body>
-    <header>
-        <h1>Bem-vindo ao Nosso App</h1>
-    </header>
-    <button class="toggle-dark-mode" onclick="toggleDarkMode()">
-        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-moon-stars-fill" viewBox="0 0 16 16">
-    <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
-    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
-</svg>
-    </button>
-    <main>
-              <section id="topics">
-            <div class="topic">
-                <h2>RESUMO PARA USAR NOSSA INTERNET ILIMITADA</h2>
-                <p>
 
-PASSO 1: Você não precisar ter internet, deve ter usado sua franquia da sua operadora.<br><br>
+<!-- Header -->
+<header>
+    <div class="logo">VPN WORD NET</div>
+    <nav>
+        <ul id="nav-menu">
+            <li><a href="#hero" class="active">Início</a></li>
+            <li><a href="#planos">Planos</a></li>
+            <li><a href="#apps">Apps</a></li>
+            <li><a href="#galeria">Galeria</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#depoimentos">Depoimentos</a></li>
+            <li><a href="#tutoriais">Tutoriais Video</a></li>
+            <li><a href="#tutoriais-escritos">Tutoriais Escritos</a></li>
+            <li><a href="#suporte">Suporte</a></li>
+            <li><a href="#termos">Termos</a></li>
 
-PASSO 2: Dependendo de qual operadora você está usando, pode pegar com plano ou sem plano ativo ou até sem precisar cadastrar chip vai depender de cada região.<br><br>
-                  
-PASSO 3: Você vai precisar de nosso aplicativo! Você baixa em nosso tópico logo abaixo ou nos ícones do lado esquerdo.<br><br>         
 
-Resumo do resumo: Você precisa ter um chip com qualquer plano ativo ou sem, vai depender de sua região. Acabou sua internet, só escolher um desbloqueio dentro de nosso aplicativo, colocar seu usuário e senha e conectar.<br><br>
-                 
-Logo abaixo, os planos para usar nossa internet ilimitada. Observe que alguns desbloqueios não podem estar mais funcionando porque as operadoras derrubarão.<br><br>
-                  
-🟣vivo controle<br>
-🟣vivo pré-ativo<br>
-🟣vivo propaganda<br>
-🟣vivo easy premium<br>
-🟣vivo sem precisar cadastrar<br><br>                 
+            <!-- Ícones sociais MOBILE -->
+            <li class="social-icons">
+    <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp">
+        <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp"> WhatsApp
+    </a>
+    <a href="https://t.me/seuusuario" target="_blank" class="telegram">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram"> Telegram
+    </a>
+    <a href="https://youtube.com/seucanal" target="_blank" class="youtube">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"> YouTube
+    </a>
+    <a href="https://instagram.com/seuperfil" target="_blank" class="instagram">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram"> Instagram
+    </a>
+    <a href="https://facebook.com/seuperfil" target="_blank" class="facebook">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"> Facebook
+    </a>
+</li>
+        </ul>
+    </nav>
+    <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
 
-🔵tim plano<br>
-🔵tim crédito válido<br>
-🔵tim sem nada ativo<br>
-🔵tim apenas cadastrado<br>
-🔵tim sem precisar cadastrar<br><br>
+<!-- Hero -->
+<section id="hero" class="hero">
+    <div class="hero-content">
+        <h1>VPN Word Net — Internet Ilimitada Premium</h1>
+        <p>Conexões de alta qualidade e estáveis para streaming, jogos e revenda para lucrar aquele dinheirinho extra. Compatível com celulares, TV Box, roteadores e muito mais. Configuração rápida com suporte. Internet ilimitada para usar e abusar: esse é o nosso lema!</p>
+        <div class="hero-buttons">
+            <a href="#planos" class="ver-planos">Ver Planos</a>
+        </div>
+    </div>
+</section>
 
-🔴claro diária 2$ por dia<br>
-🔴claro planos ativo<br>
-🔴claro sem nada ativo (não testei)<br><br>
-                  
-🟣 Operadora vivo, recomendo é mais usada para usar internet ilimitada via aplicativo, aqui em nosso site você encontra um vídeo de como cadastrar vivo pre de $ 20 por mês depois que acabar sua internet só conectar nosso aplicativo e ser feliz.<br><br>
+<!-- =================== PLANOS =================== -->
+<section id="planos">
+  <h2 class="section-title">Nossos Planos</h2>
+  <div class="plans">
 
-🔵 Operador Tim, alguns DDD você não precisar ter chip cadastrado não precisa ter plano etc.<br><br>
+    <!-- Plano Popular -->
+    <div class="plan plan-popular">
+      <span class="tag">Popular</span>
+      <h3>Básico</h3>
+      <div class="price">R$15,00/mês</div>
+      <ul class="features">
+        <li>Acesso a todos os servidores</li>
+        <li>Acesso a todos desbloquei</li>
+        <li>Velocidade da mais alta qualidade</li>
+        <li>duração 30 a 31 dias</li>
+        <li>1 ligin</li>
+        <li>Suporte 24/7</li>
+      </ul>
+      <div class="buy">
+        <a href="https://wa.me/5511916434151?text=Olá,%20quero%20assinar%20o%20plano%20Popular" target="_blank">Assinar Agora</a>
+      </div>
+    </div>
 
-🔴 Operadora claro, umas da operadora ótima rápida, mais para usar internet ilimitada via aplicativo é horrível, “minha opinião não recomendo”. <br><br>
+    <!-- Plano Premium -->
+    <div class="plan plan-premium">
+      <span class="tag">Premium</span>
+      <h3>Avançado</h3>
+      <div class="price">$20,00/mês</div>
+      <ul class="features">
+        <li>Acesso a todos os servidores</li>
+        <li>Acesso a todos desbloquei</li>
+        <li>Velocidade da mais alta qualidade</li>
+        <li>duração 30 a 31 dias</li>
+        <li>2 ligin</li>
+        <li>Suporte 24/7</li>
+      </ul>
+      <div class="buy">
+        <a href="https://wa.me/5511916434151?text=Olá,%20quero%20assinar%20o%20plano%20Premium" target="_blank">Assinar Agora</a>
+      </div>
+    </div>
 
-— sabendo tudo isso acima os tópicos desse site abaixo e complemento experiencia para usar internet ilimitada.
-                </a>
-            </div>
-                        <div class="topic">
-                <h2>CONECTAR VIA PROPAGANDA 'ADS'</h2>
-                <div class="video-container">
-                    <iframe src="https://player.vimeo.com/video/1040748271" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p>
-❓vc tem um chp vivo sem Internet ou não está gerando dados em nosso app?<br><br>
+    <!-- Plano Família -->
+    <div class="plan plan-familia">
+      <span class="tag">Família</span>
+      <h3>Plano Família</h3>
+      <p class="price">R$ 25,00/mês</p>
+      <ul class="features">
+        <li>Acesso a todos os servidores</li>
+        <li>Acesso a todos desbloquei</li>
+        <li>Velocidade da mais alta qualidade</li>
+        <li>duração 30 a 31 dias</li>
+        <li>5 ligin</li>
+        <li>Suporte 24/7</li>
+      </ul>
+      <div class="buy">
+        <a href="https://wa.me/5511916434151?text=Olá,%20quero%20assinar%20o%20plano%20Família" target="_blank">Assinar Agora</a>
+      </div>
+    </div>
 
-✅ solução CONCLUÍDA veja vídeo acima e volte usar Internet ilimitada use abuse que não acabar!<br><br>
+    <!-- Plano Empreendedor -->
+    <div class="plan plan-empreendedor">
+      <span class="tag">Empreendedor</span>
+      <h3>Business</h3>
+      <div class="price">$30,00/mês</div>
+      <ul class="features">
+        <li>Acesso a todos os servidores</li>
+        <li>Acesso a todos desbloquei</li>
+        <li>Velocidade da mais alta qualidade</li>
+        <li>duração 30 a 31 dias</li>
+        <li>10 ligin</li>
+        <li>Suporte 24/7</li>
+        <li>appicativo separado</li>
+        <li>site separado</li>
+        <li>sacesso ao mini painel telegram</li>
+      </ul>
+      <div class="buy">
+        <a href="https://wa.me/5511916434151?text=Olá,%20quero%20assinar%20o%20plano%20Empreendedor" target="_blank">Assinar Agora</a>
+      </div>
+    </div>
 
-📝 TUTORIAL DO VÍDEO <br><br>
-
-1: abrir site<br>
-📊 https://internetgratis.vivo.com.br<br><br>
-
-2: preencha algumas informações caso precise <br><br>
-
-3: escolher uma propaganda para ganhar os megabytes grátis<br><br>
-
-4: ganho os megabytes? Ligue modo avião 7 a 10 segundos caso não tenha entrado megabytes <br><br>
-
-5: acabou seu megabytes que ganho? entre em nosso APP VPN WORD NET conectar nos desbloqueio dito! não conectou? Ligue modo avião 7 a 10 segundos pronto vai conectar 🥱<br><br>
-
-📢 basta assistir uma propaganda por dia ou se estiver sorte 1 vez cada 30 dias 🥱
-
-                </p>
-                <a href="https://internetgratis.vivo.com.br" download class="download-icon">
-                    <i class="fa fa-download"></i> Site oficial vivo propaganda
-                </a>
-                <a href="https://www.mediafire.com/file/dh7bdzd64ueb8n7/NET_SEM_LIMITE_pro.apk/file" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar aplicativo net sem limite
-                </a>
-            </div>
-      
-               <div class="topic">
-                <h2>Aprenda contratar plano pré-turbo</h2>
-                <div class="video-container">
-                    <iframe src="https://player.vimeo.com/video/987759464" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p>
-                    Plano pré turbo e mais encontra custando $20 30 dias<br><br>
-
-Você que comprou chip pré quer saber qual plano escolher e contratar pra usar nosso app ou outro qualquer<br><br>
-
-📃Nesse plano operadora oferece pra você!<br><br>
-
-✅4 gigar de internet<br><br>
-
-✅WhatsApp ilimitada 30 dias<br><br>
-
-✅Ligação ilimitada 30 dias<br><br>
-
-✅Sms ilimitada 30 dias<br><br>
-
-Vale lembrar seu plano tem que está ativo dura 30 dias, depois tem que pagar + 20$ para continuar usando oque operadora oferece e nosso aplicativos VPN WORD NET<br><br>
-
-Você só usará Internet VPN após consumir os 4 gigas do contrato.<br><br>
-
-Seja feliz!
-                </p>
-                <a href="https://play.google.com/store/apps/details?id=br.com.vivo&pcampaignid=web_share" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar Aplicativo da vivo oficial play store
-                </a>
-            </div>
-            <div class="topic">
-                <h2>SEM USB PARTE 1 COMPARTILHAR INTERNET COM PC NOTBOOK</h2>
-                <div class="video-container">
-                    <iframe src="https://player.vimeo.com/video/984075447" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p>
-                    1: Conectar em nosso app VPN WORD NET<br><br>
-                    2: Ligar seu roteador coloque uma senha e nome qualquer<br><br>
-                    3: Abra app WORD NET PROXY, marque a caixinha sem root e clique em iniciar, vai aparecer os números de IP. Pegue o último. Se não funcionar, teste o outro número de IP.<br><br>
-                    4: Veja parte 2
-                </p>
-                <a href="https://www.mediafire.com/file/q00fd4kukompcel/VPN+WORD+NET+v2ray+pro+2.apk/file" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar aplicativo vpn word net
-                </a>
-                <a href="https://www.mediafire.com/file/8xd2hqa9duty6be/APLICATIVO_COMPARTILHA_NET_CELULAR_TV.apk/file" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar Aplicativo wordnet proxy
-                </a>
-            </div>
-            <div class="topic">
-                <h2>SEM USB PARTE 2 COMPARTILHAR INTERNET COM PC NOTBOOK</h2>
-                <div class="video-container">
-                    <iframe src="https://player.vimeo.com/video/984617839" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p>
-1: abra seu Wi-Fi em seu "pc, notebook" pesquisar por seu Wi-Fi nome que você criou em seu celular e colocar senha que você criou.
-2: em seu "pc, notebook" vá em configuração. procure rede e internet, procure por proxy, agora procure abar "usar um servidor proxy agora coloque o servidor e porta do nosso WORDNET PROXY de um salva e seja feliz!
-                </p>
-                <a href="https://www.mediafire.com/file/q00fd4kukompcel/VPN+WORD+NET+v2ray+pro+2.apk/file" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar aplicativo vpn word net
-                </a>
-                <a href="https://www.mediafire.com/file/8xd2hqa9duty6be/APLICATIVO_COMPARTILHA_NET_CELULAR_TV.apk/file" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar Aplicativo wordnet proxy
-                </a>
-            </div>
-            <div class="topic">
-                <h2>VIA USB COMPARTILHAR INTERNET COM PC NOTBOOK</h2>
-                <div class="video-container">
-                    <iframe src="https://player.vimeo.com/video/987778490" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p>
-Esse método gosto de mais uso bastante.<br><br>'
-Bem fácil de fazer, veja o vídeo e seja feliz!
-                </p>
-                <a href="https://www.mediafire.com/file/q00fd4kukompcel/VPN+WORD+NET+v2ray+pro+2.apk" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar aplicativo vpn word net
-                </a>
-                <a href="https://www.mediafire.com/file/09efrw5kvavk7yd/PDNET%2B+CELULAR.apk"download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar Aplicativo pdnet premium para celular
-                </a>
-                <a href="https://www.mediafire.com/file/9ka84vgbas29gs7/PDNET+PARA+PC.exe" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar Aplicativo pdnet para pc notbook
-                </a>
-                <a href="https://pdanet.co/install/" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar Aplicativo pdnet pc direto no site oficial
-                </a>
-            </div>
-            <div class="topic">
-                <h2>COMPARTILHAR INTERNET COM OUTRO CELULAR, TV, STICK TV, TV BOX ETC</h2>
-                <div class="video-container">
-                    <iframe src="https://player.vimeo.com/video/987764743" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p>
-Esse método é mesmo para TV, TV stick, TV box, celular, PC, notebook ETC!<br><br>
-
-Para fazer isso seu aparelho tem que ter opção de porta.<br><br>
-
-Veja vídeo e seja feliz.
-                </p>
-                <a href="https://www.mediafire.com/file/q00fd4kukompcel/VPN+WORD+NET+v2ray+pro+2.apk" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar aplicativo vpn word net
-                </a>
-                <a href="https://www.mediafire.com/file/8xd2hqa9duty6be/APLICATIVO+COMPARTILHA+NET+CELULAR+TV.apk" download class="download-icon">
-                    <i class="fa fa-download"></i> Baixar Aplicativo wordnet proxy
-                </a>
-            </div>
-      
-            <div class="topic">
-                <h2>oque é internet ilimitada via vpn?</h2>
-                <p>
-                    Internet ilimitada via VPN refere-se ao uso de uma VPN (Rede Privada Virtual) para acessar a internet sem restrições de dados. Em termos mais simples, ao usar uma VPN, você pode navegar, fazer streaming e baixar conteúdo sem se preocupar com limites de dados impostos pelo seu provedor de internet. Aqui estão alguns pontos chave:<br><br>
-
-1. **Sem Limites de Dados**: Algumas VPNs oferecem planos que não limitam a quantidade de dados que você pode usar. Isso é útil para atividades intensivas em dados, como assistir vídeos em alta definição ou fazer downloads grandes.<br><br>
-
-2. **Privacidade e Segurança**: As VPNs criptografam seu tráfego de internet, tornando suas atividades online mais seguras e privadas. Isso pode proteger você contra espionagem, hackers e vigilância.<br><br>
-
-4. **Contornar Limitações de Provedores de Internet**: Alguns provedores de internet podem limitar sua velocidade de conexão após um certo uso de dados. Usar uma VPN pode ajudar a contornar essas limitações, pois o provedor não pode ver o que você está fazendo online.
-                </a>
-            </div>
+  </div>
+</section>
   
-            <div class="topic">
-                <h2>Oque você precisa saber para conectar</h2>
-                <p>
-                    📢 — Leia com atenção quem nunca usou internet ilimitada!<br><br>
+<!-- ==============================
+     SEÇÃO DE APLICATIVOS COLORIDA
+============================== -->
+<section id="apps" style="padding: 80px 20px; background: #121212; font-family: 'Segoe UI', sans-serif;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
+    <h2 style="font-size: 3em; margin-bottom: 20px; color:#fff;">VOCÊ ESTÁ NO LUGAR CERTO! BAIXE SEU APP.</h2>
+    <p style="margin-bottom: 50px; font-size: 1.2em; color: #ccc;">Escolha o aplicativo que deseja e baixe com facilidade. Aplicativos de internet ilimitada, revenda e compartilhamento.</p>
+
+    <div class="app-grid">
+      <!-- CARD VPN WORD NET -->
+      <div class="app-card" style="background: linear-gradient(135deg, #ff4e50, #f9d423);">
+        <img src="https://s12.gifyu.com/images/b37zB.png" alt="VPN Word Net">
+        <h3>VPN WORD NET</h3>
+        <p>Navegue com segurança com nosso aplicativo de internet ilimitada! Use e abuse que não acaba. O que está esperando? Não perca tempo, todos estão usando!</p>
+        <a href="https://download1326.mediafire.com/1qnx5oghoncgIy6wB30zibL9raQ_8bnLDheer0OIUjVmD8zjA0vmYwE_dqg8DeonOr5yPpl3KkYWqHDB6wfVYS58xqsCIfeCbi03yPKlX4V4i_vjdH7CNsB99lREkG-6Jslf8CVMQgjky-xqDldMDrU6TVaB_jAWOOHHFumDWqRnUKg/q00fd4kukompcel/VPN+WORD+NET+pro.apk" class="btn-download" style="color:#ff4e50;" target="_blank">Baixar App</a>
+      </div>
+
+      <!-- CARD REVENDA NET -->
+      <div class="app-card" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
+        <img src="https://s12.gifyu.com/images/b37zZ.png" alt="Revenda Net">
+        <h3>NET SEM LIMITE 'revenda'</h3>
+        <p>Venha revender nosso Net sem limite! Lucre deitado e aumente seus ganhos de forma simples e rápida.</p>
+        <a href="https://download1075.mediafire.com/lptwahgcz3vg6gKgXoUAJPZIG0ckDGbLV2yQVR8S8_hOosGPilYKdgxKKJc7DrwVzAsyVVl0k5mZNl2J-c-pFRUjvIfzDSYjjvrzZ7NFIFO64aIQjNAfgBi2wx2y0KmUEuhMwneGcWdcGZOxMe6aAT1MLaMJt6xa8k4b2FirVKvji94/dh7bdzd64ueb8n7/NET+SEM+LIMITE+pro.apk" class="btn-download" style="color:#6a11cb;" target="_blank">Baixar App</a>
+      </div>
+
+      <!-- CARD VPN WORD TV -->
+      <div class="app-card" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
+        <img src="https://s12.gifyu.com/images/b372q.png" alt="VPN Word Net TV">
+        <h3>VPN WORD TV</h3>
+        <p>No nosso aplicativo VPN Word TV, navegue sem limites e assista TV e streaming etc com VPN integrado SMART TV! O que está esperando?</p>
+        <a href="https://download1584.mediafire.com/s3axktkqfmagBUfq1tY1V_NXir4LiyqT6dj4SPwZdZAbzBb-D3shxcqVtIrO59cYPyLwomzcTNI7bPDxtfhVwTzcVEL51XDCpbXQmeVmmh5wBfnXl8N0zWX_KCInKpmE6a0VeKbegiUtMPudr9fbE6m7oSl7H57AyNlzdEmt1NOn4rk/u89nypa09xw7j6z/VPN+WORD+TV.apk" class="btn-download" style="color:#ff416c;" target="_blank">Baixar App</a>
+      </div>
+
+      <!-- CARD NPV IPHONE -->
+      <div class="app-card" style="background: linear-gradient(135deg, #ff1493, #ff85c0);">
+        <img src="https://s12.gifyu.com/images/b3dHO.png" alt="NPV iPhone">
+        <h3>NPV IPHONE</h3>
+        <p>Tenha internet ilimitada no seu iPhone! Navegue com segurança, rapidez e sem limites, aproveitando todos os recursos deste app. Você pode baixá-lo diretamente na App Store. (Este aplicativo não é de nossa autoria).</p>
+        <a href="https://apps.apple.com/br/app/npv-tunnel/id1629465476" class="btn-download" style="color:#ff1493;" target="_blank">Baixar App</a>
+      </div>
+
+      <!-- CARD WORD PROXY -->
+      <div class="app-card" style="background: linear-gradient(135deg, #43cea2, #185a9d);">
+        <img src="https://s12.gifyu.com/images/b37xU.png" alt="Word Proxy">
+        <h3>WORD PROXY</h3>
+        <p>Proteja sua conexão e navegue com segurança em qualquer rede! Word Proxy garante privacidade e internet rápida em todos os dispositivos.</p>
+        <a href="https://download844.mediafire.com/3gn17kup46lgFFtmm5S0VBB8MpVisGMKaZ94CzjhseJMe8p1vyboARCCygNahdIcv6tRAUAt8dLLpV1DiPlmeC2471EwHPnxnmIM0V9Kh2HsTArgd405v4PxqBVb85jjyxu5SZle9HeNTaC1-mUJTPFGNVwbgmPJh8XdKl-SKGzOYTA/mqyd14jpyu2or4o/WORD+NET+PROXY.apk" class="btn-download" style="color:#43cea2;" target="_blank">Baixar App</a>
+      </div>
+
+      <!-- CARD PDANET PREMIUM -->
+      <div class="app-card" style="background: linear-gradient(135deg, #00c6ff, #0072ff);">
+        <img src="https://s12.gifyu.com/images/b3dKw.png" alt="Compartilhar Net">
+        <h3>PDANET PREMIUM</h3>
+        <p>Esse eu uso bastante! Não é só no celular — use sua internet em qualquer lugar: compartilhe via USB, Bluetooth e muito mais para PC, notebook e outros dispositivos. Lembrando: esse app não é nosso!</p>
+        <div class="download-buttons" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <a href="https://download1474.mediafire.com/qmnzlhhvmshguHgwuZOgPd-tVx_oNXFTRf17VpPOY-bM1eXxZ_18bRX6_fgCu5YcElgpTICfo70fTUowc8axO2pRielVJF_WumRTgl4wyxUBYUs_Nv8fwTSfx3hjdruXUzA9FXkGSo4ny9gySuS55DTzcyB6V42DBeUhT6vsx_b3TWI/okln728bkdx99o7/PDANET+PREMIUM+APP.apk" class="btn-download" style="color:#00c6ff;" target="_blank">App Premium</a>
+          <a href="https://pdanet.co/install" class="btn-download" style="color:#00c6ff;" target="_blank">Site Oficial</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  
+<!-- Galeria -->
+<section id="galeria">
+  <h2>VEJA ALGUMAS INLUTRAÇÃES</h2>
+  <div class="gallery-container">
+    
+    <div class="gallery-item">
+      <img src="https://s12.gifyu.com/images/b3dUu.png" alt="VPN Technology">
+      <div class="gallery-text">
+        <h3>O Melhor Aplicatido</h3>
+        <p>Conexão da mais alta potência e qualidade.
+Tenha acesso estável, rápido e ilimitado onde estiver — em casa, no trabalho ou na estrada.
+Assista, jogue, navegue e compartilhe sem travamentos e sem limites.
+Com apenas um clique, conecte todos os seus dispositivos e leve a liberdade da internet para qualquer lugar.
+Tecnologia de ponta, desempenho incomparável e cobertura que não te deixa na mão.
+Use, abuse e aproveite ao máximo — porque aqui, a conexão nunca acaba!</p>
+      </div>
+    </div>
+
+    <div class="gallery-item reverse">
+      <img src="https://s12.gifyu.com/images/b3dfz.jpg" alt="Internet Connection">
+      <div class="gallery-text">
+        <h3>Diversos desbloqueios</h3>
+        <p>São vários desbloqueios disponíveis para todos os tipos de planos — e até mesmo sem cadastro! Além disso, temos milhares de novos desbloqueios para você testar e se conectar no que achar melhor.
+O que está esperando? Baixe agora nosso app e aproveite sua internet ilimitada! Use, abuse e navegue à vontade — aqui, a conexão não acaba!</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="https://s12.gifyu.com/images/b3dYO.jpg" alt="Network Security">
+      <div class="gallery-text">
+        <h3>Compartilhar é Facil de Mais</h3>
+        <p>Ficou sem internet para jogar aquele jogo online, estudar, navegar ou assistir redes sociais no seu PC ou notebook? Com nossa internet ilimitada via USB ou via proxy você volta a usar tudo rapidamente. É fácil, rápido e simples: conecte-se e continue jogando, estudando e navegando sem se preocupar com limites.</p>
+      </div>
+    </div>
+    
+        <div class="gallery-item reverse">
+      <img src="https://s12.gifyu.com/images/b3d5W.jpg" alt="Internet Connection">
+      <div class="gallery-text">
+        <h3>Configurações Simples</h3>
+        <p>Nosso aplicativo oferece uma configuração tão fácil que até uma criança consegue usar. Ele inclui atalhos para deixar sua conexão somente em 5G, 4G ou 3G, informações do usuário, economia de bateria, limpeza de apps, roteador via proxy, atalho para APN e ícones que levam diretamente minhas redes sociais e grupos. Tudo ao alcance da ponta dos seus dedos — experimente todas as funções de forma rápida, prática e intuitiva!</p>
+      </div>
+    </div>
+    
+    <div class="gallery-item">
+      <img src="https://s12.gifyu.com/images/b3dom.jpg" alt="Network Security">
+      <div class="gallery-text">
+        <h3>Atualização fácil e automática</h3>
+        <p>Nosso app atualiza sozinho ao ser aberto, basta estar conectado à internet. Além disso, também disponibilizamos um botão para você clicar e atualizar manualmente, tornando o processo ainda mais fácil — até mesmo para quem não tem experiência com tecnologia.</p>
+      </div>
+    </div>
+
+    <div class="gallery-item reverse">
+      <img src="https://s12.gifyu.com/images/b3nnl.jpg" alt="Internet Connection">
+      <div class="gallery-text">
+        <h3>Sem dinheiro? Não se preocupe!</h3>
+        <p>Pensando em você, liberamos testes grátis todos os dias, para que possa aproveitar nossa internet ilimitada sem gastar nada. É a oportunidade perfeita para testar antes de comprar ou até mesmo usar sem compromisso, garantindo que tudo funcione. Com apenas alguns cliques, você já pode se conectar, navegar, assistir vídeos, jogar online e ficar nas redes sociais sem limites e sem travamentos.</p>
+      </div>
+    </div>
+    
+    <div class="gallery-item">
+      <img src="https://s12.gifyu.com/images/b3nuH.jpg" alt="Network Security">
+      <div class="gallery-text">
+        <h3>Muito Fácil Conectar</h3>
+        <p>Parece mentira, mas são apenas 3 passos para se conectar em nosso app: Não ter internet Ter os requisitos dos desbloqueios Conectar e ser feliz com nossa internet de alta potência e qualidade É tão simples que até uma criança consegue se conectar sem nenhum problema! E por que você acha que não vai conseguir? Venha para nosso app e volte a usar internet ilimitada de forma rápida, fácil e sem complicações!</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <h2 style="text-align: center;">FAQ — DÚVIDAS FREQUENTES</h2>
+  <p style="margin-bottom: 50px; font-size: 1.2em; text-align: center;">
+    Clique na dúvida e veja a resposta rapidamente. Não encontrou sua dúvida? Fale com a gente pelo WhatsApp!
+  </p>
+  <div class="faq-container">
+
+<div class="faq-item">
+  <h3>Posso pedir reembolso?</h3>
+  <p>Não é possível solicitar reembolso. Conforme consta nos termos de uso, não oferecemos devoluções. Nosso trabalho é manter o servidor ativo, seguro e com desbloqueios atualizados.</p>
+</div>
+    
+      <div class="faq-item">
+  <h3>Como instalo no celular?</h3>
+  <p>Baixe o aplicativo diretamente do nosso site. Antes da instalação, habilite a opção "Fontes desconhecidas" nas configurações do seu celular. Depois, insira seu login e conecte-se em segundos. Seguro e rápido!</p>
+</div>
+
+    <div class="faq-item">
+  <h3>Onde encontro os aplicativos?</h3>
+  <p>Nossos aplicativos de internet ilimitada não estão disponíveis na Play Store. Você pode baixá-los diretamente do nosso site com segurança e rapidez.</p>
+</div>
+
+    <div class="faq-item">
+  <h3>Como configurar a TV Box?</h3>
+  <p>Baixe o aplicativo diretamente no seu TV Box. Abra o arquivo, permita instalação de fontes desconhecidas se necessário e siga as instruções na tela. Insira seu login e comece a aproveitar a internet ilimitada e todos os recursos do app.</p>
+</div>
+
+    <div class="faq-item">
+  <h3>Roteadores compatíveis?</h3>
+  <p>Sim! Basta colocar seu chip no roteador. Nos dispositivos como TV, celular e outros, conecte ao Wi-Fi do roteador. Depois, abra nosso app no aparelho desejado e aproveite a internet ilimitada. Simples assim!</p>
+</div>
+
+    <div class="faq-item">
+  <h3>Quantos dispositivos posso conectar?</h3>
+  <p>Depende do plano contratado. Você pode conectar vários dispositivos simultaneamente.</p>
+</div>
+
+    <div class="faq-item">
+  <h3>Posso conectar 1 login em vários dispositivos?</h3>
+  <p>Sim, você pode usar 1 login em vários dispositivos, mas não simultaneamente. Quando um dispositivo estiver conectado, outro só conseguirá acessar após o primeiro desconectar.</p>
+</div>
+    
+    <div class="faq-item">
+  <h3>Qual velocidade?</h3>
+  <p>A velocidade varia de acordo com a qualidade do sinal da sua operadora, condições do local, desbloqueios e outros fatores. Dependendo da região, pode chegar de 30 Mbps até 480 Mbps.</p>
+</div>
+
+<div class="faq-item">
+  <h3>Posso compartilhar com PC ou notebook?</h3>
+  <p>Sim! Você pode compartilhar via USB ou proxy. Basta ter o app pdanet instalado no celular e o programa pdanet no PC ou notebook. A conexão é rápida, fácil e simples.</p>
+</div>
+    
+    <div class="faq-item">
+  <h3>Meu app PDANET só fica desconectando. Por quê?</h3>
+  <p>Isso não deveria acontecer, pois o PDANET que disponibilizamos é premium.  
+  Se você instalou e atualizou o PDANET, perdeu o desbloqueio premium.  
+  Recomendamos desinstalar e instalar a versão premium que está aqui, ou comprar direto na Play Store.  
+  Se você usar o PDANET free, ele derruba a conexão a cada certo tempo use premium daqui e não atualize ou compre pela play store.</p>
+</div>
+    
+    <div class="faq-item">
+  <h3>1 login serve para qualquer operadora?</h3>
+  <p>Sim! Seu login funciona para todas as operadoras, basta conectar nos desbloqueios correspondentes.</p>
+</div>
+
+    <div class="faq-item">
+  <h3>Não consigo mais conectar no desbloqueio que usava, por quê?</h3>
+  <p>Se você já tentou modo avião, limpar a APN, alternar entre 4G e 3G ou reiniciar o celular e ainda não consegue conectar, é porque o desbloqueio caiu. Tente conectar em outro desbloqueio ou troque de operadora.</p>
+</div>
+
+    <div class="faq-item">
+      <h3>Tem suporte 24/7?</h3>
+      <p>Sim! Nosso suporte está disponível a qualquer hora via WhatsApp ou email.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- =================== DEPOIMENTOS =================== -->
+<section id="depoimentos">
+  <h2>Depoimentos</h2>
+  <div class="testimonials">
+
+    <!-- Depoimento 1 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=32" alt="João S." data-text='["Uso a VPN Word Net há meses, conexão ilimitada e sem travar!","Posso compartilhar minha internet com o PdaNet fácil.","Recomendo pra quem quer liberdade total na navegação!"]'>
+      <p></p>
+      <h4>— João S.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 2 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=47" alt="Maria F." data-text='["Uso no meu Android e no iPhone, funciona perfeito nos dois.","A conexão é super estável, nunca cai.","Melhor app pra internet ilimitada que já testei!"]'>
+      <p></p>
+      <h4>— Maria F.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 3 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=12" alt="Carlos P." data-text='["Uso pra revender internet e é ótimo!","Clientes elogiam a estabilidade e a velocidade.","O suporte do app é rápido e muito atencioso."]'>
+      <p></p>
+      <h4>— Carlos P.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 4 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=5" alt="Ana L." data-text='["Uso o Word Net no trabalho e em casa, sem limite de dados!","Consigo assistir vídeos e usar redes sociais o dia todo.","Vale muito a pena!"]'>
+      <p></p>
+      <h4>— Ana L.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 5 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=25" alt="Lucas M." data-text='["Conecto meu celular e notebook pelo PdaNet, funciona top!","Já testei várias VPNs, nenhuma chega perto dessa.","Sem travar, sem limite e com ótimo desempenho!"]'>
+      <p></p>
+      <h4>— Lucas M.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 6 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=48" alt="Beatriz A." data-text='["Revendo internet ilimitada com Word Net e ganho uma renda extra.","Clientes adoram a estabilidade.","O app é fácil de usar e super leve."]'>
+      <p></p>
+      <h4>— Beatriz A.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 7 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=14" alt="Rafael G." data-text='["Com Word Net minha conexão nunca mais caiu.","Uso pra jogar online e assistir filmes sem travar.","Top demais, indico pra todo mundo!"]'>
+      <p></p>
+      <h4>— Rafael G.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 8 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=9" alt="Juliana P." data-text='["Uso a versão Android e compartilho com meu notebook.","Nunca travou, mesmo usando várias horas seguidas.","Internet ilimitada de verdade!"]'>
+      <p></p>
+      <h4>— Juliana P.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 9 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=18" alt="Fernando R." data-text='["A revenda é super fácil de configurar e funciona perfeito.","Consegui vários clientes satisfeitos com o app.","Simplesmente o melhor sistema de internet ilimitada!"]'>
+      <p></p>
+      <h4>— Fernando R.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+    <!-- Depoimento 10 -->
+    <div class="testimonial-card">
+      <img src="https://i.pravatar.cc/150?img=58" alt="Camila T." data-text='["O app é leve, rápido e a conexão não cai nunca.","Uso o PdaNet pra compartilhar com meu tablet, perfeito!","Finalmente uma VPN que cumpre o que promete."]'>
+      <p></p>
+      <h4>— Camila T.</h4>
+      <span class="click-indicator">Clique na foto</span>
+    </div>
+
+  </div>
+</section>
+
+  
+  <!-- Tutoriais -->
+<section id="tutoriais">
+    <h2 style="color: #ff4c4c; text-align: center; text-shadow: 0 0 10px rgba(255,76,76,0.5); font-size: 3em; margin-bottom: 20px;">
+        Tutoriais
+    </h2>
+    <div class="tutorial-videos">
+
+        <!-- Tutorial 1 -->
+        <div class="video-card">
+            <iframe 
+                src="https://www.youtube.com/embed/yLYeT3f3JEY" 
+                title="Tutorial de Instalação no Celular" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+            <p>Como instalar a VPN Word Net no seu celular passo a passo.</p>
+        </div>
+
+        <!-- Tutorial 2 -->
+        <div class="video-card">
+            <iframe 
+                src="https://www.youtube.com/embed/jojfEx_rkto" 
+                title="Tutorial de Configuração TV Box" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+            <p>Configuração da VPN em TV Box para streaming sem travar.</p>
+        </div>
+      
+              <!-- Tutorial 3 -->
+        <div class="video-card">
+            <iframe 
+                src="https://www.youtube.com/embed/E88-_ACd-hU" 
+                title="Tutorial de Configuração TV Box" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+            <p>Configuração da VPN em TV Box para streaming sem travar.</p>
+        </div>
+
+        <!-- Você pode adicionar quantos vídeos quiser seguindo o mesmo modelo -->
+    </div>
+</section>
+  
+<!-- ==============================
+     SEÇÃO DE TUTORIAIS EM ESCRITA
+============================== -->
+<section id="tutoriais-escritos" class="tutorials-section">
+  <h2 class="section-title">Tutoriais em Escrita</h2>
+  <p class="section-subtitle">Passo a passo detalhado para configurar e aproveitar ao máximo nossos serviços.</p>
+
+  <div class="tutorial-grid">
+    <div class="tutorial-card">
+      <div class="tc-header">
+        <i class="fas fa-wifi"></i>
+        <h3>Como conectar na VPN Word Net</h3>
+      </div>
+      <div class="tc-body">
+        <p>1️⃣ Abra o aplicativo.<br>
+           2️⃣ Escolha um servidor próximo.<br>
+           3️⃣ Toque em "Conectar" e aguarde a mensagem de sucesso.<br>
+           💡 Dica: se a conexão cair, altere o protocolo nas configurações.</p>
+      </div>
+    </div>
+
+    <div class="tutorial-card">
+      <div class="tc-header">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>Instalando o app em Smart TVs</h3>
+      </div>
+      <div class="tc-body">
+        <p>1️⃣ Baixe o APK em um pen drive.<br>
+        2️⃣ Insira na TV e abra o gerenciador de arquivos.<br>
+        3️⃣ Instale e conceda as permissões necessárias.<br>
+        🔧 Pronto! O app aparecerá no menu principal.</p>
+      </div>
+    </div>
+
+    <div class="tutorial-card">
+      <div class="tc-header">
+        <i class="fas fa-cogs"></i>
+        <h3>Corrigindo erros de conexão</h3>
+      </div>
+      <div class="tc-body">
+        <p>1️⃣ Feche o app completamente.<br>
+        2️⃣ Limpe o cache em Configurações > Aplicativos.<br>
+        3️⃣ Reabra o app e selecione outro servidor.<br>
+        💡 Se persistir, reinicie o roteador.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==============================
+     SEÇÃO DE SUPORTE PREMIUM
+============================== -->
+<section id="suporte" class="suporte-section" style="background: linear-gradient(180deg, #0a0a0a, #121212 60%, #0d0d0d); padding:80px 20px; text-align:center;">
+  <h2 class="suporte-title" style="font-size:2.2rem; font-weight:800; background: linear-gradient(90deg, #00ffe0, #007bff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px;">
+    💬 Central de Suporte & Ajuda
+  </h2>
+  <p class="suporte-subtitle" style="color:#ccc; max-width:650px; margin:0 auto 50px; font-size:1rem;">
+    Precisa de ajuda? Nossa equipe está disponível para te atender em qualquer momento.
+  </p>
+
+  <div class="suporte-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:25px; justify-content:center; align-items:stretch;">
+
+    <!-- Card WhatsApp -->
+    <div class="suporte-card" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:30px 20px; box-shadow:0 0 20px rgba(0,0,0,0.3); backdrop-filter:blur(10px); transition:all 0.4s ease;">
+      <div>
+        <div class="suporte-icon" style="font-size:2.5rem; color:#00ffe0; margin-bottom:15px;">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <h3 style="font-size:1.3rem; margin-bottom:10px; color:#fff; font-weight:600;">Atendimento via WhatsApp</h3>
+        <p style="color:#aaa; font-size:0.95rem; line-height:1.5; margin-bottom:18px;">Fale diretamente com um atendente e resolva qualquer dúvida em tempo real.</p>
+      </div>
+      <a href="https://wa.me/5511999999999" target="_blank" class="suporte-btn" style="display:inline-block; background:linear-gradient(90deg,#00ffe0,#007bff); color:#000; font-weight:700; padding:10px 24px; border-radius:50px; text-decoration:none; transition:0.3s;">Abrir WhatsApp</a>
+    </div>
+
+    <!-- Card Telegram -->
+    <div class="suporte-card" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:30px 20px; box-shadow:0 0 20px rgba(0,0,0,0.3); backdrop-filter:blur(10px); transition:all 0.4s ease;">
+      <div>
+        <div class="suporte-icon" style="font-size:2.5rem; color:#00ffe0; margin-bottom:15px;">
+          <i class="fab fa-telegram-plane"></i>
+        </div>
+        <h3 style="font-size:1.3rem; margin-bottom:10px; color:#fff; font-weight:600;">Canal no Telegram</h3>
+        <p style="color:#aaa; font-size:0.95rem; line-height:1.5; margin-bottom:18px;">Receba atualizações, novos apps e suporte rápido em nosso canal oficial.</p>
+      </div>
+      <a href="https://t.me/seucanalreal" target="_blank" class="suporte-btn" style="display:inline-block; background:linear-gradient(90deg,#00ffe0,#007bff); color:#000; font-weight:700; padding:10px 24px; border-radius:50px; text-decoration:none; transition:0.3s;">Entrar no Canal</a>
+    </div>
+
+    <!-- Card Instagram -->
+    <div class="suporte-card" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:30px 20px; box-shadow:0 0 20px rgba(0,0,0,0.3); backdrop-filter:blur(10px); transition:all 0.4s ease;">
+      <div>
+        <div class="suporte-icon" style="font-size:2.5rem; color:#00ffe0; margin-bottom:15px;">
+          <i class="fab fa-instagram"></i>
+        </div>
+        <h3 style="font-size:1.3rem; margin-bottom:10px; color:#fff; font-weight:600;">Instagram</h3>
+        <p style="color:#aaa; font-size:0.95rem; line-height:1.5; margin-bottom:18px;">Siga-nos no Instagram para dicas, novidades e suporte rápido.</p>
+      </div>
+      <a href="https://instagram.com/seuinstagram" target="_blank" class="suporte-btn" style="display:inline-block; background:linear-gradient(90deg,#00ffe0,#007bff); color:#000; font-weight:700; padding:10px 24px; border-radius:50px; text-decoration:none; transition:0.3s;">Visitar Instagram</a>
+    </div>
+
+    <!-- Card YouTube -->
+    <div class="suporte-card" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:30px 20px; box-shadow:0 0 20px rgba(0,0,0,0.3); backdrop-filter:blur(10px); transition:all 0.4s ease;">
+      <div>
+        <div class="suporte-icon" style="font-size:2.5rem; color:#00ffe0; margin-bottom:15px;">
+          <i class="fab fa-youtube"></i>
+        </div>
+        <h3 style="font-size:1.3rem; margin-bottom:10px; color:#fff; font-weight:600;">YouTube</h3>
+        <p style="color:#aaa; font-size:0.95rem; line-height:1.5; margin-bottom:18px;">Assista nossos tutoriais, reviews e novidades diretamente no canal oficial do YouTube.</p>
+      </div>
+      <a href="https://youtube.com/seucanal" target="_blank" class="suporte-btn" style="display:inline-block; background:linear-gradient(90deg,#00ffe0,#007bff); color:#000; font-weight:700; padding:10px 24px; border-radius:50px; text-decoration:none; transition:0.3s;">Visitar YouTube</a>
+    </div>
+
+    <!-- Card E-mail -->
+    <div class="suporte-card" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:30px 20px; box-shadow:0 0 20px rgba(0,0,0,0.3); backdrop-filter:blur(10px); transition:all 0.4s ease;">
+      <div>
+        <div class="suporte-icon" style="font-size:2.5rem; color:#00ffe0; margin-bottom:15px;">
+          <i class="fas fa-envelope-open-text"></i>
+        </div>
+        <h3 style="font-size:1.3rem; margin-bottom:10px; color:#fff; font-weight:600;">Suporte por E-mail</h3>
+        <p style="color:#aaa; font-size:0.95rem; line-height:1.5; margin-bottom:18px;">Prefere contato formal? Envie uma mensagem e retornaremos em até 24h úteis.</p>
+      </div>
+      <a href="mailto:support@vpnwordnet.com" class="suporte-btn" style="display:inline-block; background:linear-gradient(90deg,#00ffe0,#007bff); color:#000; font-weight:700; padding:10px 24px; border-radius:50px; text-decoration:none; transition:0.3s;">Enviar E-mail</a>
+    </div>
+
+    <!-- Card Endereço -->
+    <div class="suporte-card" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:30px 20px; box-shadow:0 0 20px rgba(0,0,0,0.3); backdrop-filter:blur(10px); transition:all 0.4s ease;">
+      <div>
+        <div class="suporte-icon" style="font-size:2.5rem; color:#00ffe0; margin-bottom:15px;">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h3 style="font-size:1.3rem; margin-bottom:10px; color:#fff; font-weight:600;">Nosso Endereço</h3>
+        <p style="color:#aaa; font-size:0.95rem; line-height:1.5; margin-bottom:18px;">
+          Rua da Natividade, 1, Cidade Antiga, Belém, Palestina – CEP 00000-000
+        </p>
+      </div>
+      <a href="https://www.google.com/maps?q=Belém,+Palestina" target="_blank" class="suporte-btn" style="display:inline-block; background:linear-gradient(90deg,#00ffe0,#007bff); color:#000; font-weight:700; padding:10px 24px; border-radius:50px; text-decoration:none; transition:0.3s;">Ver no Mapa</a>
+    </div>
+
+  </div> <!-- Fim suporte-grid -->
+
+  <div class="suporte-extra" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:18px; padding:25px; margin-top:60px; max-width:700px; margin-left:auto; margin-right:auto; box-shadow:inset 0 0 20px rgba(0,255,200,0.05);">
+    <h3 style="color:#00ffe0; margin-bottom:10px;">💡 Dica rápida</h3>
+    <p style="color:#bbb; font-size:0.95rem; line-height:1.6;">Antes de pedir suporte, confira se o app está atualizado e se sua internet está estável.  
+    A maioria dos problemas é resolvida em segundos!</p>
+  </div>
+</section>
+  
+  <!-- ==============================
+     SEÇÃO DE TERMOS DE USO
+============================== -->
+<section id="termos" style="padding: 80px 20px; background: #111; color: #fff; font-family: 'Segoe UI', sans-serif;">
+  <div class="container" style="max-width: 1000px; margin: 0 auto;">
+    <h2 style="font-size: 3em; margin-bottom: 20px; color:#ff7f00; text-align: center; text-shadow: 0 0 10px rgba(255,127,0,0.4);">
+  Termos de Uso
+</h2>
+    <p style="margin-bottom: 50px; font-size: 1.2em; color: #ccc; text-align: center;">Leia atentamente os termos abaixo. É importante que você esteja ciente das regras e responsabilidades ao utilizar nossos serviços.</p>
+
+    <div class="terms-container">
+      <!-- Termo 1 -->
+      <div class="term-item">
+        <button class="term-header">Uso do Serviço <span class="toggle-icon">+</span></button>
+        <div class="term-content">
+          <p>Você concorda em usar nossos serviços de forma responsável. Não é permitido compartilhar acessos indevidos ou violar qualquer lei vigente.</p>
+        </div>
+      </div>
+
+      <!-- Termo 2 -->
+      <div class="term-item">
+        <button class="term-header">Limitação de Responsabilidade <span class="toggle-icon">+</span></button>
+        <div class="term-content">
+          <div class="term-content">
+  <p>O serviço é fornecido “no estado em que se encontra”. Não nos responsabilizamos por interrupções externas, falhas de conexão ou uso indevido dos aplicativos.</p>
+  <p>Se a operadora bloquear algum desbloqueio ou o serviço parar de funcionar, isso não depende de nós.</p>
+  <p>Evite compartilhar seu acesso para não correr o risco de ficar sem ele.</p>
+  <p>Um desbloqueio pode funcionar para uma pessoa e não para outra, dependendo da região.</p>
+</div>
+      </div>
+
+      <!-- Termo 3 -->
+      <div class="term-item">
+        <button class="term-header">Atualizações e Alterações <span class="toggle-icon">+</span></button>
+        <div class="term-content">
+          <p>Podemos atualizar os serviços e termos a qualquer momento. É responsabilidade do usuário acompanhar alterações publicadas nesta seção.</p>
+        </div>
+      </div>
+
+      <!-- Termo 4 -->
+      <div class="term-item">
+        <button class="term-header">Reembolso <span class="toggle-icon">+</span></button>
+       <div class="term-content">
+  <p>Não oferecemos reembolso. Todos os pagamentos são finais. A partir de <strong>06/07/23</strong>, decidimos não aceitar devoluções.</p>
+  <p>Atenção: só compre se souber como funciona este mundo de internet “gambiarra”. Teste bem antes de comprar.</p>
+  <p>Observação: meu trabalho é manter o servidor ativo e os desbloqueios das operadoras sempre atualizados.</p>
+</div>
+      </div>
+
+      <!-- Termo 5 -->
+      <div class="term-item">
+        <button class="term-header">Privacidade <span class="toggle-icon">+</span></button>
+        <div class="term-content">
+  <p>Respeitamos sua privacidade e não coletamos dados, exceto quando exigido por lei.</p>
+  <p>Nenhum dado sensível é armazenado. Não use nosso serviço para cometer crimes virtuais.</p>
+  <p>Seguimos as leis como qualquer outro serviço.</p>
+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer>
+    &copy; 2025 VPN Word Net. Todos os direitos reservados. | <a href="#hero">Voltar ao topo</a>
+</footer>
+
+<script>
+// ==============================
+// MENU HAMBÚRGUER
+// ==============================
+const toggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('nav-menu');
+
+toggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  menu.classList.toggle('active');
+});
+
+document.querySelectorAll('#nav-menu li a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    menu.classList.remove('active');
+  });
+});
+
+document.addEventListener('click', (e) => {
+  if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+    menu.classList.remove('active');
+  }
+});
+
+// ==============================
+// FAQ INTERATIVO
+// ==============================
+const faqItems = document.querySelectorAll('.faq-item h3');
+faqItems.forEach(item => {
+  item.addEventListener('click', () => {
+    faqItems.forEach(i => { if (i !== item) i.parentElement.classList.remove('active'); });
+    item.parentElement.classList.toggle('active');
+  });
+});
+
+// ==============================
+// HEADER AO ROLAR
+// ==============================
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if (window.scrollY > 50) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
+
+// ==============================
+// GALERIA ANIMADA
+// ==============================
+const galleryItems = document.querySelectorAll('.gallery-item');
+function checkVisibilityGallery() {
+  galleryItems.forEach(item => {
+    const rect = item.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      item.classList.add('visible');
+    } else {
+      item.classList.remove('visible');
+    }
+  });
+}
+window.addEventListener('scroll', checkVisibilityGallery);
+window.addEventListener('load', checkVisibilityGallery);
+
+// ==============================
+// DEPOIMENTOS COM ANIMAÇÃO (fade in escalonado)
+// ==============================
+const testimonialCards = document.querySelectorAll('.testimonial-card');
+
+function animateTestimonials() {
+  testimonialCards.forEach((card, index) => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50 && rect.bottom > 0) {
+      card.style.transitionDelay = `${index * 0.15}s`;
+      card.classList.add('visible');
+    } else {
+      card.classList.remove('visible');
+    }
+  });
+}
+window.addEventListener('scroll', animateTestimonials);
+window.addEventListener('load', animateTestimonials);
+
+// ==============================
+// EFEITO TYPEWRITER AO CLICAR NA IMAGEM
+// ==============================
+let typingIntervals = new Map();
+let messageIndexes = new Map();
+
+testimonialCards.forEach(card => {
+  const img = card.querySelector('img');
+  const paragraph = card.querySelector('p');
+  const messages = JSON.parse(img.dataset.text || '[""]');
+  messageIndexes.set(img, 0);
+
+  // Remove cursor pointer do card inteiro
+  card.style.cursor = 'default';
+
+  // Só a imagem é clicável
+  img.style.cursor = 'pointer';
+
+  img.addEventListener('click', (e) => {
+    e.stopPropagation(); // impede que o card inteiro seja afetado
+    let idx = messageIndexes.get(img);
+    const text = messages[idx];
+    idx = (idx + 1) % messages.length;
+    messageIndexes.set(img, idx);
+
+    if (typingIntervals.has(img)) {
+      clearTimeout(typingIntervals.get(img));
+      typingIntervals.delete(img);
+    }
+
+    paragraph.textContent = '';
+    paragraph.style.opacity = 1;
+
+    let i = 0;
+    const typingSpeed = 40;
+
+    function type() {
+      if (i < text.length) {
+        paragraph.textContent += text.charAt(i);
+        i++;
+        const timeout = setTimeout(type, typingSpeed);
+        typingIntervals.set(img, timeout);
+      } else {
+        typingIntervals.delete(img);
+      }
+    }
+    type();
+  });
+});
+
+// ==============================
+// ABA DE TABS (Apps, FAQ etc.)
+// ==============================
+const tabs = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.tab-panel');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    panels.forEach(panel => panel.classList.remove('active'));
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ==============================
+// TUTORIAIS EXPANSÍVEIS
+// ==============================
+document.querySelectorAll('.tutorial-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.tutorial-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  });
+});
+  
+  const termHeaders = document.querySelectorAll('.term-header');
+termHeaders.forEach(header => {
+  header.addEventListener('click', () => {
+    const item = header.parentElement;
+    item.classList.toggle('active');
+  });
+});
+</script>
 
-💬Tudo dito abaixo serve para Android e iPhone! Não tenho aplicativo Play Store. Já iPhone tem aplicativo loja do iPhone!<br><br>
 
-💬para você usar nossa internet ilimitada você não precisar ter Internet. Resumindo você não pode ter internet em seu chip, mais se eu conectar com ha internet da operadora não ficará ilimitado? R — vou nem responder uma pergunta dessa! Basta você não ter internet e ter os requisito de cada desbloqueio!<br><br>
 
-1: você tem que entender internet via aplicativo, é GAMBIARRA, GATO, NET, INTERNET IMPROVISADA e não dever ser trocada por sua internet de operadora poque, recomendo ter mais de um chip caso desbloqueio pare de conecta você usar outra operadora.<br><br>
 
-2: os desbloqueio da operadora, um dia, um mês, um ano pode cair! E se cair pode ser que não tenha outro desbloqueio ou outro método de conexão, ou pode demora voltar.<br><br>
 
-3: recomendo ter mais de duas operadoras caso uma conexão cair você conectar em outra.<br><br>
 
-4: atualmente para ter uma conexão sem dor de cabeça sem estresse você terá que ter plano ativo! Para isso você terá que ter gasto com operado por mês.<br><br>
 
-5: meu trabalho é manter desbloqueio atualizado e servidor ativo<br><br>
 
-6: recomendo entrar em nosso grupo oficial Telegram @vpnwordnet, tudo em primeira mão, atualização, preços, se vai entrar em manutenção, novidades, etc.<br><br>
-
-7: recomendo entrar em nosso grupo oficial Telegram de aplicativo, dicas, tutorial, “etc” @vpnwordnetapp lá você tem tudo de dicas em primeira mão.<br><br>
-
-8: As operadoras que funciona em nosso aplicativo são TIM VIVO CLARO.<br><br>
-
-9: a velocidade conexão não depende só do servidor, depende muito do sinal, tempo etc.<br><br>
-
-10: Falarei os plano abaixo de cada operado para você esta conectando e se estiver sorte pode ser que não precisa de nada de plano ativo.<br><br>
-
-🔴claro: plano ativo<br>
-🔴claro: diária ativo<br>
-🔴claro: sem nada ativo depende da região e persistências de dicas etc<br><br>
-
-🟣vivo: controle<br>
-🟣vivo: easy premium<br>
-🟣vivo: pre turbo ativo<br>
-🟣vivo: diária Waze bugada<br><br>
-
-🔵Tim: plano<br>
-🔵Tim: saldo valido<br>
-🔵Tim: expirado<br>
-🔵Tim: apenas chip cadastrado<br>
-🔵Tim: sem precisar cadastrar chip<br><br>
-
-💬de todas que foi citada mais recomendada é operadora vivo! Se sua Tim pegar sem precisar cadastra chip ou apenas cadastrado melhor ainda!<br><br>
-
-✅Sabendo disso tudo você já está pronto para usar nossa internet ilimitada, a melhor net gambiarra do planeta terra de alta qualidade tecnologia de ponta a ponta
-                </a>
-            </div>
-            <div class="topic">
-                <h2>Como alterar sua apn</h2>
-                <p>
-                    Trocar a APN (Nome do Ponto de Acesso) da sua operadora de celular é um processo relativamente simples, mas pode variar ligeiramente dependendo do sistema operacional do seu dispositivo (Android ou iOS). Aqui estão os passos gerais para alterar a APN em ambos os sistemas:<br><br>
-Alterar a APN no Android<br>
-Acesse as Configurações:<br><br>
-
-Abra o aplicativo Configurações no seu dispositivo Android.<br>
-Vá para Redes Móveis:<br><br>
-
-Dependendo da marca e modelo do seu dispositivo, vá para "Redes e Internet" ou "Conexões".<br>
-Em seguida, toque em "Redes móveis".<br>
-Acesse os Pontos de Acesso:<br><br>
-
-Toque em "Pontos de acesso" ou "Nomes dos pontos de acesso (APN)".<br>
-Adicionar ou Editar APN:<br><br>
-
-Para editar uma APN existente, toque na APN que deseja modificar.<br>
-Configurar a Nova APN:<br><br>
-
-Recomedor que deixe sempre.<br>
-Tipo de autenticação IPV4 recomendado!<br>
-Tipo de APN IPV4 recomendado!<br>
-APN você pode trocar e testando caso queira<br>
-Clique nos 3 ponto e salve suas configuração feita.<br><br><br><br>
-
-Alterar a APN no iOS (iPhone)<br>
-Acesse as Configurações:<br><br>
-
-Abra o aplicativo Configurações no seu iPhone.<br>
-Vá para Celular:<br><br>
-
-Toque em "Celular" (ou "Dados Móveis", dependendo da versão do iOS).<br>
-Acesse as Opções de Dados Celulares:<br><br>
-
-Toque em "Opções de Dados Celulares".<br>
-Vá para Rede de Dados Celular:<br><br>
-
-Toque em "Rede de Dados Celular".<br>
-Configurar a Nova APN:<br><br>
-
-Preencha os campos conforme as configurações fornecidas pela sua operadora. As informações comuns incluem:<br>
-APN: Endereço da APN.<br>
-Nome de usuário e Senha (se necessário).<br>
-Salvar as Configurações:<br><br>
-
-As alterações são salvas automaticamente ao sair das configurações.<br>
-Informações Necessárias para Configurar a APN<br><br>
-
-Recomedor que deixe sempre.<br>
-Tipo de autenticação IPV4 recomendado!<br>
-Tipo de APN IPV4 recomendado!<br>
-APN você pode trocar e testando caso queira
-                </a>
-            </div>
-            <div class="topic">
-                <h2>Algumas APN para testar das 3 operadora</h2>
-                <p>
-                    APN'S da VIVO<br><br>
-
-Nome: Vivo H<br>
-APN: zap.vivo.com.br/H+<br>
-Usuário: vivo<br>
-Senha: vivo<br><br>
-
-Nome: Vivo INTERNET<br>
-APN: zap.vivo.com.br<br>
-Usuário: vivo<br>
-Senha: vivo<br><br>
-
-Nome: Vivo W<br>
-APN: wap.vivo.com.br<br>
-Usuário: vivo<br>
-Senha: vivo<br><br>
-
-Nome: vivo T<br>
-APN: vivoturbo.br.4g+<br>
-Usuário: vivo<br>
-Senha: vivo<br><br>
-
-Nome: vivo B<br>
-APN: vivoinbrazil.br<br>
-Usuário: vivo<br>
-Senha: vivo<br><br>
-
-Nome: Alive Brazil<br>
-APN: alivebrazil.br<br>
-Usuário: vivo<br>
-Senhe: vivo<br><br>
-
-Obs: Protocolo de APN e Protocolo de Roaming APN tem que Deixar Somente em " ipv4 "<br><br>
-
-APN's da TIM<br><br>
-
-Nome: Tim Connect<br>
-APN: timbrasil.br<br>
-Usuário: tim<br>
-Senha: tim<br><br>
-
-Nome: tim<br>
-APN: tim.br<br>
-Usuário: tim<br>
-Senha: tim<br><br>
-
-Nome: 3G Turbo<br>
-APN: 3gturbo.max.tim.br/H+<br>
-Usuário: tim<br>
-Senha: tim<br><br>
-
-Nome: Tim Fibra<br>
-APN: timfiber.br<br>
-Usuário Nao é Necessário<br>
-Senha Não é Necessário<br><br>
-
-Nome: Mídia 4G<br>
-APN: midia.4g.tim.br<br>
-Proxy: 200.179.66.242<br>
-Porta: 8080<br>
-Usuário: Tim<br>
-Senha: Tim<br><br>
-
-Nome: Wap Tim<br>
-APN: wap.tim.br<br>
-Usuário: tim<br>
-Senha: tim<br><br>
-
-Nome: Tim ind full<br>
-APN: timindfull.br<br>
-Sem o usuário e senha na APN<br><br>
-
-Obs: Protocolo de APN e Protocolo de Roaming APN tem que Deixar Somente em " ipv4 "<br><br>
-
-APN's da CLARO<br><br>
-
-Nome: Java Session<br>
-APN: java.claro.com.br<br>
-Usuário: claro<br>
-Senha: claro<br><br>
-
-Nome : Wap Claro<br>
-APN: wap.claro.com.br<br>
-Usuário: claro<br>
-Senha: claro<br><br>
-
-Nome: Claro<br>
-APN: claro.com.br<br>
-Usuário: claro<br>
-Senha: claro<br><br>
-
-Nome: MMS Claro<br>
-APN: MMS.claro.com.br<br>
-Usuário: claro<br>
-Senha: claro<br><br>
-
-Nome: BandaLarga<br>
-Funciona no Migrado APN: bandalarga.claro.com.br<br>
-Usuário: claro<br>
-Senha: claro<br><br>
-
-Conexão Claro<br>
-APN: conexao.claro.br<br>
-Usuário: claro<br>
-Senha: claro<br><br>
-
-Obs: Protocolo de APN e Protocolo de Roaming APN tem que Deixar Somente em " ipv4 "
-                </a>
-            </div>
-            <div class="topic">
-                <h2>+algumas APN vivo</h2>
-                <p>
-                    É USUÁRIO DA VIVO, VPN NÃO CONECTA OU NÃO GERA DADOS?<br><br>
-
-CONFIRA ALGUMAS POSSÍVEIS SOLUÇÕES (Lembre que para cada uma delas, você pode precisar fazer modo avião):<br><br>
-
-MODO AVIÃO<br><br>
-
-1. Desconecta do app<br>
-2. Poe no modo avião<br>
-3. Tira do modo avião<br>
-4. Espera aparecer a notificação "fazer login na rede" ou "sem internet"<br>
-5. Teste novamente as opções<br><br>
-
-1️⃣ Protocolo da APN (alguns funciona com a config padrão - ipv4 e ipv6 - outros só com ipv4. Faça o teste. Não resolveu? Deixe na configuração padrão e vamos para a próxima solução:<br><br>
-
-2️⃣ Editar dominio da APN (padrão é zap.vivo.com.br), altere "zap" por qualquer outra coisa, ficando como nos exemplos abaixo:<br><br>
-
-recarga-api.vivo.com.br<br>
-api.vivo.com.br<br>
-recarga.vivo.com.br<br>
-dns.vivo.com.br<br>
-4field.vivo.com.br<br>
-api.vivo.com.br<br>
-assine.vivo.com.br<br><br>
-
-Não deu? Deixe na APN padrão novamente e bora para as outras soluções<br><br>
-
-3️⃣ Mudar a banda H+/4G/5G (Em alguns casos não quer funcionar no 4G, Tente no H+ pra ver se funciona - Fica em Configurações » Redes » Redes Móveis » Seleção de Banda.)<br><br>
-
-Se fazer essa alteração também não fizer gerar dados, resta alterar seu plano/promoção<br><br>
-
-🟣 Vivo Pré Redesocial 30 dias - 12,00 mensal (Precisa do Vivo Pré Turbo 30 dias ativo pra ativar esse de 12,00. Ativa o turbo primeiro, usa ele e no ultimo dia faz esse de 12. Depois cancela o turbo e fica so com esse)<br><br>
-
-🟣 Vivo Pré Turbo 30 dias - 20,00 mensal (Deu certo pra maioria, precisa fazer a recarga minima de 20,00 a cada 30 dias para ativar a promoção).<br><br>
-
-🟣 Vivo Easy Prime - 33,00 mensal (Todos os clientes que utilizam assim ta gerando dados normalmente, é necessário pagar os 33,00 do plano todo mês e não deixar o saldo expirar.<br><br>
-
-🟣 Vivo Controle (Também precisa manter o plano em dia se quiser que funcione sem muitas dores de cabeça.<br><br>
-                </a>
-            </div>
-        </section>
-    </main>
-    <footer>
-         Copyright © 2019-2025 vpn word net. <br> Todos os direitos reservado
-    </footer>
-
-    <a href="https://vpnwordnetoficial.github.io/loja/" target="_blank">
-        <svg class="icon-store" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
-  <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/>
-</svg>
-    </a>
-
-    <a href="https://apps.apple.com/br/app/npv-tunnel/id1629465476" target="_blank">
-        <svg class="icon-apple" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-apple" viewBox="0 0 16 16">
-  <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
-  <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
-</svg>
-    </a>
-
-    <a href="https://www.mediafire.com/file/q00fd4kukompcel/VPN+WORD+NET+v2ray+pro+2.apk/file" target="_blank">
-        <svg class="icon-android" 
-             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google-play" viewBox="0 0 16 16">
-  <path d="M14.222 9.374c1.037-.61 1.037-2.137 0-2.748L11.528 5.04 8.32 8l3.207 2.96zm-3.595 2.116L7.583 8.68 1.03 14.73c.201 1.029 1.36 1.61 2.303 1.055zM1 13.396V2.603L6.846 8zM1.03 1.27l6.553 6.05 3.044-2.81L3.333.215C2.39-.341 1.231.24 1.03 1.27"/>
-</svg>
-    </a>
-
-    <a href="https://t.me/vpnwordnet" target="_blank">
-    <svg class="icon-telegram1" 
-<svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512"><defs><linearGradient id="prefix__a" gradientUnits="userSpaceOnUse" x1="256" y1="3.84" x2="256" y2="512"><stop offset="0" stop-color="#2AABEE"/><stop offset="1" stop-color="#229ED9"/></linearGradient></defs><circle fill="url(#prefix__a)" cx="256" cy="256" r="256"/><path fill="#fff" d="M115.88 253.3c74.63-32.52 124.39-53.95 149.29-64.31 71.1-29.57 85.87-34.71 95.5-34.88 2.12-.03 6.85.49 9.92 2.98 2.59 2.1 3.3 4.94 3.64 6.93.34 2 .77 6.53.43 10.08-3.85 40.48-20.52 138.71-29 184.05-3.59 19.19-10.66 25.62-17.5 26.25-14.86 1.37-26.15-9.83-40.55-19.27-22.53-14.76-35.26-23.96-57.13-38.37-25.28-16.66-8.89-25.81 5.51-40.77 3.77-3.92 69.27-63.5 70.54-68.9.16-.68.31-3.2-1.19-4.53s-3.71-.87-5.3-.51c-2.26.51-38.25 24.3-107.98 71.37-10.22 7.02-19.48 10.43-27.77 10.26-9.14-.2-26.72-5.17-39.79-9.42-16.03-5.21-28.77-7.97-27.66-16.82.57-4.61 6.92-9.32 19.04-14.14z"/></svg>
-        </a>
-
-    <a href="https://t.me/vpnwordnetAPP" target="_blank">
-    <svg class="icon-telegram2" 
-<svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512"><defs><linearGradient id="prefix__a" gradientUnits="userSpaceOnUse" x1="256" y1="3.84" x2="256" y2="512"><stop offset="0" stop-color="#2AABEE"/><stop offset="1" stop-color="#229ED9"/></linearGradient></defs><circle fill="url(#prefix__a)" cx="256" cy="256" r="256"/><path fill="#fff" d="M115.88 253.3c74.63-32.52 124.39-53.95 149.29-64.31 71.1-29.57 85.87-34.71 95.5-34.88 2.12-.03 6.85.49 9.92 2.98 2.59 2.1 3.3 4.94 3.64 6.93.34 2 .77 6.53.43 10.08-3.85 40.48-20.52 138.71-29 184.05-3.59 19.19-10.66 25.62-17.5 26.25-14.86 1.37-26.15-9.83-40.55-19.27-22.53-14.76-35.26-23.96-57.13-38.37-25.28-16.66-8.89-25.81 5.51-40.77 3.77-3.92 69.27-63.5 70.54-68.9.16-.68.31-3.2-1.19-4.53s-3.71-.87-5.3-.51c-2.26.51-38.25 24.3-107.98 71.37-10.22 7.02-19.48 10.43-27.77 10.26-9.14-.2-26.72-5.17-39.79-9.42-16.03-5.21-28.77-7.97-27.66-16.82.57-4.61 6.92-9.32 19.04-14.14z"/></svg>
-        </a>
-
-    <a href="https://wa.me/message/PZDWERPHFUKUO1" target="_blank">
-    <svg class="icon-whatsapp" 
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2500 2500"><defs><style>.cls-1,.cls-2{fill-rule:evenodd;}.cls-1{fill:url(#linear-gradient);}.cls-2{fill:#fff;}</style><linearGradient id="linear-gradient" x1="2335.52" y1="6714.92" x2="2335.52" y2="-6385.98" gradientTransform="matrix(0.19, 0, 0, -0.19, 804.32, 1281.38)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#61fd7d"/><stop offset="1" stop-color="#2bb826"/></linearGradient></defs><title>whatsapp-business</title><path class="cls-1" d="M2499.8,1865.58c0,13.69-.42,43.37-1.24,66.3-2,56.11-6.46,128.51-13.19,161.5-10.11,49.57-25.37,96.36-45.26,135.31A481.8,481.8,0,0,1,2228,2440.54c-39.15,19.95-86.23,35.22-136.09,45.29-32.66,6.59-104.51,11-160.26,12.94-23,.82-52.65,1.23-66.28,1.23l-1231-.2c-13.69,0-43.37-.42-66.3-1.24-56.11-2-128.51-6.46-161.5-13.18-49.57-10.12-96.37-25.37-135.31-45.27A481.67,481.67,0,0,1,59.46,2228c-20-39.15-35.23-86.23-45.29-136.08-6.59-32.66-11-104.52-12.94-160.27C.41,1908.72,0,1879,0,1865.39l.2-1231c0-13.69.42-43.37,1.24-66.3,2-56.11,6.46-128.51,13.18-161.5C24.73,357.05,40,310.26,59.89,271.31A481.8,481.8,0,0,1,272,59.45c39.16-20,86.24-35.22,136.1-45.28,32.65-6.6,104.51-11,160.26-12.94C591.28.41,621,0,634.61,0l1231,.2c13.69,0,43.37.42,66.3,1.24,56.11,2,128.51,6.46,161.5,13.18C2143,24.73,2189.74,40,2228.69,59.89A481.67,481.67,0,0,1,2440.54,272c20,39.15,35.22,86.23,45.29,136.08,6.59,32.66,11,104.52,12.94,160.27.82,22.95,1.23,52.65,1.23,66.28Z" transform="translate(0)"/><path class="cls-2" d="M1912.32,591.45C1743.07,422.05,1518,328.72,1278.17,328.62c-494.13,0-896.28,402-896.48,896.14a894.32,894.32,0,0,0,119.66,448l-127.18,464.4,475.24-124.62a896.07,896.07,0,0,0,428.4,109.08h.37c494.07,0,896.27-402.05,896.47-896.18.09-239.46-93.07-464.63-262.33-634ZM1278.18,1970.3h-.31a744.11,744.11,0,0,1-379.24-103.83l-27.21-16.14-282,74,75.27-274.87L647,1621.23A742.88,742.88,0,0,1,533,1224.81C533.2,814.12,867.46,480,1278.47,480c199,.08,386.1,77.66,526.78,218.46s218.11,327.94,218,527c-.16,410.73-334.41,744.89-745.1,744.89Z" transform="translate(0)"/><path class="cls-2" d="M977.6,1658.86c6.31,3.8,19.27,3.8,49,3.77,126.15-.11,235.11-.49,312.62-.49,361.71,0,352.2-380.79,183.08-428.3,24.77-43.88,137.63-126.32,67.83-296.72-69-168.49-365.85-130.25-568.86-130.15-75.12,0-63.88,55.51-63.5,141.81.62,136.69.11,506.67,0,666.61C957.77,1647.81,967.56,1652.79,977.6,1658.86Zm156.51-139.55c34.15,0,114.71,0,183.77-.11,78.2-.12,147.83-36.7,146.09-114.55-1.27-73.33-50.06-97.4-117.78-104.12-64.5.62-138.27.62-212.08.62v218.16Zm0-365.44c136.05-1.87,188.54,5.48,262.82-13.12,51-29,73.34-136.42.29-172.92-50.75-25.35-200.71-16.68-263.11-14.08v200.12Z" transform="translate(0)"/></svg>
-        </a>
-
-    <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        } 
-        function showCustomAlert(message) {
-            // Criar o elemento de alerta
-            const alertDiv = document.createElement('div');
-            alertDiv.className = 'custom-alert';
-
-            // Adicionar o botão de fechar
-            const closeButton = document.createElement('button');
-            closeButton.className = 'close-btn';
-            closeButton.innerHTML = '&times;';
-            closeButton.onclick = function () {
-                alertDiv.style.opacity = '0'; // Transição de saída
-                setTimeout(() => document.body.removeChild(alertDiv), 500); // Remover após a transição
-            };
-
-            // Adicionar o conteúdo da mensagem
-            alertDiv.innerHTML = message;
-            alertDiv.appendChild(closeButton);
-
-            // Adicionar o alerta ao corpo do documento
-            document.body.appendChild(alertDiv);
-
-            // Usar setTimeout para garantir que a transição ocorra
-            setTimeout(() => alertDiv.style.opacity = '1', 10);
-        }
-
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                showCustomAlert("👋Olá, esse nosso site de dicas facilita você ter uma experiência agradável com nosso aplicativo de internet ilimitada com servidor da mais alta potência e qualidade.<br><br>Se você está navegando dentro do nosso aplicativo VPN WORD NET, os downloads não podem estar disponíveis. Recomendo usar seu navegador para baixar os aplicativos que estão disponíveis aqui.<br><br>⚠️ 𝗧𝗘𝗥𝗠𝗢𝗦..<br>A partir de 06/07/23, decidi não ter mais devolução! Só compre nossa internet ilimitada se souber como funciona esse mundo de Internet gambiarra, teste bem antes de comprar seu login.<br><br>Observem, meu trabalho é manter o servidor ativo e o desbloqueiodi das operadoras atualizado.<br><br>⭐️TODOS OS DIREITOS RESERVADOS © 2019-2025™");
-            }, 100);
-        });
-
-        // JavaScript para controlar a transição do título em loop
-        const header = document.querySelector('header h1');
-        const titles = ["VPN WORD NET 4G+ 5G+", "Peça já seu teste", "Mais barata do planeta terra 6$ reais 30 dias", "Net ilimitada, use abuse que não acabar!", "Dicas em vídeo", "Dicas em inscrita", "Seguem nas redes social", "Não esqueça de compartilhar"];
-        let currentIndex = 0;
-
-        function animateTitleOut() {
-            header.style.animationName = 'slideTitleOut';
-            setTimeout(() => {
-                header.textContent = titles[currentIndex];
-                animateTitleIn();
-            }, 1000); // Tempo para esperar antes de trocar o texto
-        }
-
-        function animateTitleIn() {
-            header.style.animationName = 'slideTitleIn';
-            currentIndex = (currentIndex + 1) % titles.length;
-            setTimeout(() => {
-                animateTitleOut();
-            }, 3000); // Tempo de exibição do título antes de trocar novamente (alterado para 5 segundos)
-        }
-
-        // Iniciar a animação
-        animateTitleOut();
-    </script>
-</body>
-</html>
